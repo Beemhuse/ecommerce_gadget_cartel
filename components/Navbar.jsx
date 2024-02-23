@@ -3,10 +3,13 @@ import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai'
 
 import { Cart } from './';
-import { useStateContext} from '../context/StateContext';
+// import { useStateContext} from '../context/StateContext';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
-  const { showCart, setShowCart, totalQuantities } = useStateContext();
+  // const { showCart, setShowCart, totalQuantities } = useStateContext();
+
+  const { showCart, cartItems, totalPrice, totalQuantities, qty } = useSelector((state) => state.cart);
 
   return (
     <div className="navbar-container">
