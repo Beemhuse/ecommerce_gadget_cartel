@@ -4,13 +4,19 @@ import { AiOutlineShopping } from 'react-icons/ai'
 
 import { Cart } from './';
 // import { useStateContext} from '../context/StateContext';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleCart } from '../store/reducers/cartReducer';
 
 const Navbar = () => {
   // const { showCart, setShowCart, totalQuantities } = useStateContext();
 
-  const { showCart, cartItems, totalPrice, totalQuantities, qty } = useSelector((state) => state.cart);
+  const { showCart, cartItems, totalPrice,  totalQuantities, qty } = useSelector((state) => state.cart);
+const dispatch =useDispatch()
+const handleShowCart =()=>{
+  dispatch(toggleCart());
 
+}
+  
   return (
     <div className="navbar-container">
       <p className="logo">
@@ -25,7 +31,7 @@ const Navbar = () => {
         </Link>
       </ul>
 
-      <button type="button" className="cart-icon" onClick={() => setShowCart(true)}>
+      <button type="button" className="cart-icon" onClick={handleShowCart}>
         <AiOutlineShopping />
         <span className="cart-item-qty">{totalQuantities}</span>
       </button>

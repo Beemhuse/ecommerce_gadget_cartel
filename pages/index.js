@@ -2,9 +2,17 @@ import React from 'react';
 
 import { client } from '../lib/client';
 import { Product, FooterBanner, HeroBanner } from '../components';
+import Slider from 'react-slick';
 
 const Home = ({ products, bannerData, categories }) => {
   // console.log(categories)
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3, // Adjust the number of slides to show
+    slidesToScroll: 1,
+  };
 
   return (
 
@@ -15,9 +23,11 @@ const Home = ({ products, bannerData, categories }) => {
       <p>speaker There are many variations passages</p>
     </div>
 
-    <div className="products-container">
-      {products?.map((product) => <Product key={product?._id} product={product} />)}
-    </div>
+    <Slider {...settings}>
+      {products?.map((product) => (
+        <Product key={product?._id} product={product} />
+      ))}
+    </Slider>
 
     <FooterBanner footerBanner={bannerData && bannerData[0]} />
   </div>

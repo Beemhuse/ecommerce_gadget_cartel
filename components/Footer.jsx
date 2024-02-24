@@ -3,13 +3,13 @@ import { AiFillInstagram, AiOutlineTwitter} from 'react-icons/ai';
 
 const Footer = () => {
   return (
-    <div className="footer-container">
+    <footer className="bg-black h-[20vh] text-white mt-8">
       <p>2024 Gadget Cartel All rights reserverd</p>
-      <p className="icons">
+      <p className="flex justify-center text-center gap-4 text-white mt-auto">
         <AiFillInstagram />
         <AiOutlineTwitter />
       </p>
-    </div>
+    </footer>
   )
 }
 

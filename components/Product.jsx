@@ -8,15 +8,13 @@ const Product = ({ product: { image, name, slug, price } }) => {
   return (
     <div>
       <Link href={`/product/${slug?.current}`}>
-        <div className="product-card border border-red-500">
+      <div className=" border w-2/3 relative overflow-hidden transform transition-transform duration-300 hover:scale-105">
           <img 
             src={urlFor(image && image[0])}
-            width={250}
-            height={250}
-            className="product-image"
+            className="h-[200px] w-full border"
           />
-          <p className="product-name">{name}</p>
-          <p className="product-price">${price}</p>
+          <p className="font-bold">{name}</p>
+          <p className="">${price}</p>
         </div>
       </Link>
     </div>

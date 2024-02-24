@@ -3,19 +3,38 @@ import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-
 
 import { client, urlFor } from '../../lib/client';
 import { Product } from '../../components';
-import { useStateContext } from '../../context/StateContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCartItem, decrementQuantity, incrementQuantity, toggleCart, toggleCartItemQuantity } from '../../store/reducers/cartReducer';
 
 const ProductDetails = ({ product, products }) => {
-  const { image, name, details, price } = product;
+  const { image, name, details, price, _id } = product;
   const [index, setIndex] = useState(0);
-  const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
+  // const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
+  const { showCart, cartItems, totalPrice, qty } = useSelector((state) => state.cart);
+  const [localQty, setLocalQty] = useState(qty); // Local state for quantity
 
-  const handleBuyNow = () => {
-    onAdd(product, qty);
+  console.log(qty)
+const dispatch = useDispatch()
+const itemInCart = cartItems.find((item) => item._id === _id);
+const itemQuantity = itemInCart ? itemInCart.quantity : qty;
 
-    setShowCart(true);
+const handleBuyNow = () => {
+  dispatch(addCartItem({ product, quantity: qty }));
+  dispatch(toggleCart())
+}
+  const handleIncrement = () => {
+    dispatch(toggleCartItemQuantity({ id: _id, value: 'inc', product, quantity: qty }));
+  };
+
+  const handleDecrement = () => {
+    dispatch(toggleCartItemQuantity({ id: _id, value: 'dec', product, quantity: qty }));
+  };
+  const handleAddToCart = () => {
+    dispatch(addCartItem({ product, quantity: qty }));
+    dispatch(toggleCart())
+
+
   }
-console.log(products, product)
   return (
     <div>
       <div className="product-detail-container">
@@ -38,7 +57,7 @@ console.log(products, product)
         <div className="product-detail-desc">
           <h1>{name}</h1>
           <div className="reviews">
-            <div>
+            <div className='flex gap-3'>
               <AiFillStar />
               <AiFillStar />
               <AiFillStar />
@@ -54,14 +73,14 @@ console.log(products, product)
           <p className="price">${price}</p>
           <div className="quantity">
             <h3>Quantity:</h3>
-            <p className="quantity-desc">
-              <span className="minus" onClick={decQty}><AiOutlineMinus /></span>
-              <span className="num">{qty}</span>
-              <span className="plus" onClick={incQty}><AiOutlinePlus /></span>
+            <p className="quantity-desc flex items-center">
+              <span className="minus" onClick={handleDecrement}><AiOutlineMinus /></span>
+              <span className="num">{itemQuantity}</span>
+              <span className="plus" onClick={handleIncrement}><AiOutlinePlus /></span>
             </p>
           </div>
           <div className="buttons">
-            <button type="button" className="add-to-cart" onClick={() => onAdd(product, qty)}>Add to Cart</button>
+            <button type="button" className="add-to-cart" onClick={handleAddToCart}>Add to Cart</button>
             <button type="button" className="buy-now" onClick={handleBuyNow}>Buy Now</button>
           </div>
         </div>
@@ -93,7 +112,7 @@ export const getStaticPaths = async () => {
 
   const paths = products.map((product) => ({
     params: { 
-      slug: product.slug.current
+      slug: product?.slug?.current
     }
   }));
 

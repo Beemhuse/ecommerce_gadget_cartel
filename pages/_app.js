@@ -3,11 +3,12 @@ import { Toaster } from 'react-hot-toast';
 
 import { Layout } from '../components';
 import '../styles/globals.css';
-import { StateContext } from '../context/StateContext';
+// import { StateContext } from '../context/StateContext';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from '../store';
-
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 function MyApp({ Component, pageProps }) {
   return (
     // <StateContext>
