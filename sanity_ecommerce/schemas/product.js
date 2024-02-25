@@ -21,6 +21,8 @@ export default {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      // hidden: ({ parent }) => parent || parent._type !== 'array' || parent.of[0]._type !== 'product',
+
       options: {
         source: 'name',
         maxLength: 90,
@@ -35,6 +37,13 @@ export default {
       name: 'details',
       title: 'Details',
       type: 'string',
+    },
+    {
+      name: 'quantity',
+      title: 'Quantity',
+      type: 'number',
+      // hidden: ({ parent }) => !parent || parent._type !== 'array' || parent.of[0]._type !== 'product',
+      validation: (Rule) => Rule.required().min(1),
     },
     {
       name: 'category',

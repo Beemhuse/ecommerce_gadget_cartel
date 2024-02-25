@@ -2,20 +2,43 @@ import React, { useRef } from 'react';
 import Link from 'next/link';
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineLeft, AiOutlineShopping } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
-import toast from 'react-hot-toast';
+import {  usePaystackPayment } from 'react-paystack';
 
-import { useStateContext } from '../context/StateContext';
-import { urlFor } from '../lib/client';
-import getStripe from '../lib/getStripe';
+import { createOrder, urlFor } from '../lib/client';
 import { useDispatch, useSelector } from 'react-redux';
-import { decrementQuantity, incrementQuantity, removeCartItem, removeCartItemById, toggleCart, toggleCartItemQuantity } from '../store/reducers/cartReducer';
+import { decrementQuantity, incrementQuantity, removeCartItem,  toggleCart } from '../store/reducers/cartReducer';
+import getConfig from 'next/config';
+import axios from 'axios';
 
+function generateTransactionNumber(prefix) {
+  // Generate a random 7-digit number
+  const randomDigits = Math.floor(Math.random() * 9000000) + 1000000;
+
+  // Combine the prefix and random number
+  const transactionNumber = prefix + randomDigits;
+
+  return transactionNumber;
+}
+
+// Example usage with a prefix
+const transactionNumber = generateTransactionNumber('GC');
 const Cart = () => {
   const cartRef = useRef();
   const { showCart, cartItems, totalPrice,  totalQuantities, qty } = useSelector((state) => state?.cart);
   const dispatch =useDispatch()
 console.log(totalQuantities)
-  // const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuanitity, onRemove } = useStateContext();
+const config = {
+  reference: transactionNumber,
+  email: "bright@example.com",
+  amount: totalPrice, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+  publicKey: `${process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY}`,
+  // callback: (response) => {
+  //   console.log('Payment successful. Reference: ', response.reference);
+  //   window.location.href = '/success'; // Replace with your actual callback URL
+  // },
+};
+
+console.log(process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY)
   const handleShowCart =()=>{
     dispatch(toggleCart());
   
@@ -24,24 +47,35 @@ console.log(totalQuantities)
     dispatch(removeCartItem({ product }));
   };
   const handleCheckout = async () => {
-    const stripe = await getStripe();
+    try {
+      // Call createOrder function before processing payment
+      const amount = totalPrice
 
-    const response = await fetch('/api/stripe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(cartItems),
-    });
+      // Call Paystack API to initiate payment
+     await axios.post('/api/paystack', {   cartItems,
+          amount,
+          email: 'bright@mail.com',
+          location: 'Some Location',
+          deliveryAddress: "address",
+          
+        })
 
-    if(response.statusCode === 500) return;
-    
-    const data = await response.json();
+      .then((res)=>{
+        console.log(res)
+        const paymentLink = res?.data?.paymentResponse?.data?.authorization_url;
+        console.log(paymentLink)
+        if(paymentLink){
+          window.location.href = paymentLink;
 
-    toast.loading('Redirecting...');
+          //  createOrder(cartItems, amount, "bright@mail.com", 'Some Location', '123 Main Street, City' );
+        }
+      })
 
-    stripe.redirectToCheckout({ sessionId: data.id });
-  }
+    } catch (error) {
+      console.error('Error handling checkout:', error);
+    }
+  };
+
 
   return (
     <div className="cart-wrapper" ref={cartRef}>
@@ -107,8 +141,8 @@ console.log(totalQuantities)
               <h3>${totalPrice}</h3>
             </div>
             <div className="btn-container">
-              <button type="button" className="btn" onClick={handleCheckout}>
-                Pay with Stripe
+              <button type="button" className="bg-black w-full text-white py-4 rounded-lg uppercase" onClick={handleCheckout}>
+                Pay with paystack
               </button>
             </div>
           </div>
