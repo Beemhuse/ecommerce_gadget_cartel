@@ -1,16 +1,45 @@
-import React, {  useEffect } from 'react';
+import React, {  useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BsBagCheckFill } from 'react-icons/bs';
 import { runFireworks } from '../../lib/utils';
+import axios from 'axios';
 
 
 const Success = () => {
+    const [loading, setLoading] = useState(true);
+    const [paymentStatus, setPaymentStatus] = useState(null);
+    const [data, setData] = useState(null);
+
+    
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const trxref = urlSearchParams.get("trxref");
   
   useEffect(() => {
     localStorage.clear();
     runFireworks();
   }, []);
 
+  useEffect(() => {
+    // Fetch verification result from the backend
+    if (trxref) {
+      const fetchVerificationResult = async () => {
+        try {
+          setLoading(true);
+
+          const response = await axios.get(`/api/verify?trxref=${trxref}`);
+          setPaymentStatus(response?.data?.status);
+          setData(response?.data);
+          console.log(response);
+        } catch (error) {
+          console.error("Error verifying payment:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchVerificationResult();
+    }
+  }, [trxref]);
   return (
     <div className="success-wrapper">
       <div className="success">
@@ -25,9 +54,9 @@ const Success = () => {
             order@example.com
           </a>
         </p>
-        <Link href="/">
+        <Link href="/orders">
           <button type="button" width="300px" className="btn">
-            Continue Shopping
+            See your orders
           </button>
         </Link>
       </div>

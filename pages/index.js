@@ -20,7 +20,7 @@ const Home = ({ products, bannerData, categories }) => {
     <HeroBanner heroBanner={bannerData?.length && bannerData[0]}  />
     <div className="products-heading">
       <h2>Best Seller Products</h2>
-      <p>speaker There are many variations passages</p>
+      {/* <p>There are many variations passages</p> */}
     </div>
 
     <Slider {...settings}>

@@ -27,11 +27,11 @@ const handleShowCart =()=>{
 }
   
   return (
-    <div className="navbar-container">
-      <p className="logo">
+    <div className="navbar-container  mb-8 py-5 p-2    bg-black">
+      <p className=" xl:w-2/3 text-white">
         <Link href="/">Gadget Cartel</Link>
       </p>
-      <ul className='flex items-center gap-6 w-full '>
+      <ul className='flex text-white items-center gap-6 w-full  justify-center'>
       {navigationLinks.map((link) => (
             <li className={`border-b-2 border-transparent group-hover:border-red-500 ${router.pathname === link.path ? 'border-red-500' : ''}`}>
             <Link href={link.path}>
@@ -40,11 +40,13 @@ const handleShowCart =()=>{
         </li>
       ))}
       </ul>
-
+<div className="flex items-center text-white gap-4 w-2/3  justify-end ">
+  <Link href={"/orders"}>View orders</Link>
       <button type="button" className="cart-icon" onClick={handleShowCart}>
-        <AiOutlineShopping />
         <span className="cart-item-qty">{totalQuantities}</span>
+        <AiOutlineShopping />
       </button>
+</div>
 
       {showCart && <Cart />}
     </div>

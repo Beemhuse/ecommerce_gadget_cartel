@@ -11,7 +11,7 @@ const HeroBanner = ({ heroBanner }) => {
         <h3>{heroBanner.midText}</h3>
         <h1>{heroBanner.largeText1}</h1>
         {/* <img src={urlFor(heroBanner.image)} alt="headphones" className="w-full h-[20vh]" /> */}
-        <div className="w-full h-[40vh] bg-cover bg-center" style={{ backgroundImage: `url(${urlFor(heroBanner.image)})` }} />
+        <div className="w-full  bg-cover bg-center h-full" style={{ backgroundImage: `url(${urlFor(heroBanner.image)})` }} />
 
         <div>
           <Link href={`/product/${heroBanner.product}`}>
