@@ -9,6 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from '../store';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import GeneralLayout from '../components/layout/GeneralLayout';
 function MyApp({ Component, pageProps }) {
   return (
     // <StateContext>
@@ -16,10 +17,10 @@ function MyApp({ Component, pageProps }) {
     <Provider store={store}>
 <PersistGate loading={null} persistor={persistor}>
 
-      <Layout>
+      <GeneralLayout>
         <Toaster />
         <Component {...pageProps} />
-      </Layout>
+      </GeneralLayout>
 </PersistGate>
 
     </Provider>

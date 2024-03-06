@@ -219,7 +219,7 @@ text-align: end;
   background-color: #f02d34;
   border-radius: 15px;
   position: relative;
-  height: 400px;
+  /* height: 400px; */
   line-height: 1; 
   color: white;
   width: 100%;

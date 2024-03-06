@@ -8,10 +8,11 @@ import order from './order';
 // import orderItem from './orderItem';
 import customer from './customer';
 import { orderedItem } from './orderItem';
+import user from './user';
 
 
 export default createSchema({
   name: 'default',
-  types: schemaTypes.concat([ product, banner, category, order, orderedItem, customer ]),
+  types: schemaTypes.concat([ product, banner, category, order, orderedItem, customer, user ]),
 })
   
