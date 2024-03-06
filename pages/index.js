@@ -28,7 +28,7 @@ const Home = ({ products, bannerData, categories }) => {
       ))}
     </Slider>
 
-    <FooterBanner footerBanner={bannerData && bannerData[0]} />
+    {/* <FooterBanner footerBanner={bannerData && bannerData[0]} /> */}
   </div>
 
   )

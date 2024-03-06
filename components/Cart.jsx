@@ -1,14 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineLeft, AiOutlineShopping } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
-import {  usePaystackPayment } from 'react-paystack';
-
 import { createOrder, urlFor } from '../lib/client';
 import { useDispatch, useSelector } from 'react-redux';
 import { decrementQuantity, incrementQuantity, removeCartItem,  toggleCart } from '../store/reducers/cartReducer';
-import getConfig from 'next/config';
 import axios from 'axios';
+import useLoggedInStatus from '../hooks/useLoggedinStatus';
+import CircularSpinner from './spinner/CircularSpinner';
+import { Cookies } from 'react-cookie';
 
 function generateTransactionNumber(prefix) {
   // Generate a random 7-digit number
@@ -21,24 +21,18 @@ function generateTransactionNumber(prefix) {
 }
 
 // Example usage with a prefix
-const transactionNumber = generateTransactionNumber('GC');
+// const transactionNumber = generateTransactionNumber('GC');
 const Cart = () => {
   const cartRef = useRef();
   const { showCart, cartItems, totalPrice,  totalQuantities, qty } = useSelector((state) => state?.cart);
   const dispatch =useDispatch()
+  const [loading, setLoading] = useState(false)
 console.log(totalQuantities)
-const config = {
-  reference: transactionNumber,
-  email: "bright@example.com",
-  amount: totalPrice, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-  publicKey: `${process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY}`,
-  // callback: (response) => {
-  //   console.log('Payment successful. Reference: ', response.reference);
-  //   window.location.href = '/success'; // Replace with your actual callback URL
-  // },
-};
+const isLoggedIn = useLoggedInStatus();
+const cookies = new Cookies();
 
-console.log(process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY)
+const user = cookies.get('GC_user');
+console.log(user)
   const handleShowCart =()=>{
     dispatch(toggleCart());
   
@@ -48,19 +42,27 @@ console.log(process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY)
   };
   const handleCheckout = async () => {
     try {
+      if (!isLoggedIn) {
+        // Redirect to the login page if the user is not logged in
+        router.push('/signin');
+        return;
+      }
+      setLoading(true)
       // Call createOrder function before processing payment
       const amount = totalPrice
 
       // Call Paystack API to initiate payment
      await axios.post('/api/paystack', {   cartItems,
           amount,
-          email: 'bright@mail.com',
+          email: user.email,
           location: 'Some Location',
           deliveryAddress: "address",
           
         })
 
       .then((res)=>{
+        setLoading(false)
+
         console.log(res)
         const paymentLink = res?.data?.paymentResponse?.data?.authorization_url;
         console.log(paymentLink)
@@ -72,6 +74,8 @@ console.log(process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY)
       })
 
     } catch (error) {
+      setLoading(false)
+
       console.error('Error handling checkout:', error);
     }
   };
@@ -140,9 +144,18 @@ console.log(process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY)
               <h3>Subtotal:</h3>
               <h3>${totalPrice}</h3>
             </div>
-            <div className="btn-container">
-              <button type="button" className="bg-black w-full text-white py-4 rounded-lg uppercase" onClick={handleCheckout}>
-                Pay with paystack
+            <div className="mt-6">
+              <button type="button" 
+                    className={`border  rounded-xl bg-black h-14  w-full text-white text-xl relative ${loading ? 'cursor-not-allowed' : ''}`}
+                    onClick={handleCheckout}
+                    disabled={loading} // Disable the button when loading is true
+                    >
+               {loading ? (
+       <CircularSpinner />
+      ) :
+      " Pay with paystack "
+    
+    }
               </button>
             </div>
           </div>

@@ -1,25 +1,26 @@
-import Paystack from 'paystack';
+import { createOrder } from '../../lib/client';
+import { verifyPaystackPayment } from '../../lib/verify';
 
-const paystackInstance = Paystack(process.env.PAYSTACK_SECRET_KEY);
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
 
-export const verifyPayment = async (reference) => {
-    try {
-      const response = await paystackInstance.transaction.verify(reference);
-      console.log('Paystack Verification Response:', response);
-  
-      // Check the payment status in the response
-      if (response.data.status === 'success') {
-        // Payment is successful
-  
-        // return true;
-        return response.data;
-      } else {
-        // Payment failed
-        // return false;
-        return response.data;
-      }
-    } catch (error) {
-      console.error('Paystack Verification Error:', error);
-      throw error;
+  try {
+    const { transactionRef, cartItems, amount, email, location, deliveryAddress } = req.body;
+
+    const isPaymentVerified = await verifyPaystackPayment(transactionRef);
+
+    if (!isPaymentVerified) {
+      return res.status(400).json({ error: 'Payment verification failed' });
     }
-  };
+
+    // If payment is verified, create the order in Sanity
+    const order = await createOrder(cartItems, amount, email, location, deliveryAddress, transactionRef);
+
+    return res.status(200).json({ success: true, order, message:"Payment verified" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: error.message });
+  }
+}

@@ -3,43 +3,35 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { scrollToTop } from "../../hooks/useScrollToTop";
-import { Cookies } from "react-cookie";
 import { handleGenericError } from "../../hooks/mixin";
+import CircularSpinner from "../../components/spinner/CircularSpinner";
 
 const Signup = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState('')
-  const cookies = new Cookies();
+  const [loading, setLoading] = useState(false);
+
 
   const handleSignup = async () => {
     try {
+        setLoading(true)
       const response = await axios.post("/api/signup", { email, password });
       console.log(response.data);
-      cookies.set("GC_user", response?.data?.data, {
-        path: "/",
-        secure: true,
-        sameSite: "lax",
-        // expires: expiringDate,
-      });
-      cookies.set("GC_token", response?.data?.token, {
-        path: "/",
-        secure: true,
-        sameSite: "lax",
-        // expires: expiringDate,
-      });
-  
+      
       localStorage.setItem('token', response.data.token)
     } catch (error) {
+        setLoading(false)
+
         const errMsg = handleGenericError(error)
         setError(errMsg)
       console.error("Signup error:", errMsg);
     }
   };
 setTimeout(()=>{
-
-}, 5000 )
+setError(null)
+}, 8000 )
   return (
     <div className="mx-auto w-2/6 flex shadow-xl flex-col gap-4 h-[40vh]  m-auto rounded-xl p-4 ">
       <h1 className="text-3xl font-bold text-center">Get Started</h1>
@@ -61,11 +53,18 @@ setTimeout(()=>{
         />
       </div>
       <button
-        className="border p-3 rounded-xl bg-black  text-white text-xl"
-        onClick={handleSignup}
-      >
-        Signup
-      </button>
+      className={`border  rounded-xl bg-black h-14  text-white text-xl relative ${loading ? 'cursor-not-allowed' : ''}`}
+      onClick={handleSignup}
+      disabled={loading} // Disable the button when loading is true
+    >
+      {loading ? (
+       <CircularSpinner />
+      ) :
+      "Signup"
+    
+    }
+      {/* {loading ? 'Loading...' : 'Signup'} */}
+    </button>
       <p className="text-center font-medium mt-5">
         Already have an account?{" "}
         <span
