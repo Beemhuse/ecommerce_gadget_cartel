@@ -7,14 +7,15 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { transactionRef } = req.body;
+    const { txref } = req.query;
 
-    const isPaymentVerified = await verifyPaystackPayment(transactionRef);
+    const isPaymentVerified = await verifyPaystackPayment(txref);
 
     if (!isPaymentVerified) {
       return res.status(400).json({ error: 'Payment verification failed' });
     }
 
+    const transactionRef = txref
     // If payment is verified, create the order in Sanity
     const order = await createOrder(cartItems, amount, email, location, deliveryAddress, transactionRef, "success");
 
