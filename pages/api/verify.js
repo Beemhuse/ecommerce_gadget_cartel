@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
     const transactionRef = trxref
     // If payment is verified, create the order in Sanity
-    const order = await createOrder(cartItems, amount, email, location, deliveryAddress, transactionRef, "success");
+    const order = await createOrder(transactionRef, "success");
 
     return res.status(200).json({ success: true, order, message:"Payment verified" });
   } catch (error) {
