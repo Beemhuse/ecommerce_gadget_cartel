@@ -9,6 +9,7 @@ import axios from 'axios';
 import useLoggedInStatus from '../hooks/useLoggedinStatus';
 import CircularSpinner from './spinner/CircularSpinner';
 import { Cookies } from 'react-cookie';
+import { useRouter } from 'next/router';
 
 function generateTransactionNumber(prefix) {
   // Generate a random 7-digit number
@@ -30,7 +31,7 @@ const Cart = () => {
 console.log(totalQuantities)
 const isLoggedIn = useLoggedInStatus();
 const cookies = new Cookies();
-
+const router = useRouter()
 const user = cookies.get('GC_user');
 console.log(user)
   const handleShowCart =()=>{
