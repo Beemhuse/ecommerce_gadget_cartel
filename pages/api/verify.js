@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { transactionRef, cartItems, amount, email, location, deliveryAddress } = req.body;
+    const { transactionRef } = req.body;
 
     const isPaymentVerified = await verifyPaystackPayment(transactionRef);
 
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     }
 
     // If payment is verified, create the order in Sanity
-    const order = await createOrder(cartItems, amount, email, location, deliveryAddress, transactionRef);
+    const order = await createOrder(cartItems, amount, email, location, deliveryAddress, transactionRef, "success");
 
     return res.status(200).json({ success: true, order, message:"Payment verified" });
   } catch (error) {

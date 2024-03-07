@@ -36,7 +36,7 @@ export default {
       name: 'status',
       title: 'Order Status',
       type: 'string',
-      options: {
+      options: {  
         list: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
       },
       validation: (Rule) => Rule.required(),
