@@ -8,7 +8,6 @@ import axios from 'axios';
 const Success = () => {
     const [loading, setLoading] = useState(true);
     const [paymentStatus, setPaymentStatus] = useState(null);
-    const [data, setData] = useState(null);
 
     
   const urlSearchParams = new URLSearchParams(window.location.search);
@@ -16,7 +15,10 @@ const Success = () => {
   
   useEffect(() => {
     localStorage.clear();
-    runFireworks();
+    if(paymentStatus === 200){
+
+      runFireworks();
+    }
   }, []);
 
   useEffect(() => {
@@ -28,7 +30,6 @@ const Success = () => {
 
           const response = await axios.get(`/api/verify?trxref=${trxref}`);
           setPaymentStatus(response?.data?.status);
-          setData(response?.data);
           console.log(response);
         } catch (error) {
           console.error("Error verifying payment:", error);
@@ -50,8 +51,8 @@ const Success = () => {
         <p className="email-msg">Check your email inbox for the receipt.</p>
         <p className="description">
           If you have any questions, please email
-          <a className="email" href="mailto:order@example.com">
-            order@example.com
+          <a className="email" href="mailto:gadgetcartelstore@gmail.com">
+            gadgetcartelstore@gmail.com
           </a>
         </p>
         <Link href="/orders">
