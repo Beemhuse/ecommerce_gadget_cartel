@@ -1,32 +1,19 @@
 import React from 'react';
 
 import { client } from '../lib/client';
-import { Product, FooterBanner, HeroBanner } from '../components';
-import Slider from 'react-slick';
+import { Product, MobileProducts, LaptopProducts, HeroBanner, ShopSale } from '../components';
 
-const Home = ({ products, bannerData, categories }) => {
-  // console.log(categories)
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3, // Adjust the number of slides to show
-    slidesToScroll: 1,
-  };
-
+const Home = ({ products, bannerData, categories, laptopProducts }) => {
+console.log(laptopProducts)
   return (
 
   <div>
-    <HeroBanner heroBanner={bannerData?.length && bannerData[0]}  />
-    <div className="products-heading">
-      <h2>Best Seller Products</h2>
-    </div>
 
-    <Slider {...settings}>
-      {products?.map((product) => (
-        <Product key={product?._id} product={product} />
-      ))}
-    </Slider>
+    <HeroBanner heroBanner={bannerData?.length && bannerData[0]}  />
+  
+    <MobileProducts products={products} />
+    <LaptopProducts products={laptopProducts} />
+    <ShopSale />
 
     {/* <FooterBanner footerBanner={bannerData && bannerData[0]} /> */}
   </div>
@@ -37,19 +24,34 @@ const Home = ({ products, bannerData, categories }) => {
 };
 
 export const getServerSideProps = async () => {
-  const query = '*[_type == "product"]';
-  const products = await client.fetch(query);
+  // Fetch products for laptops
+  const productQuery = '*[_type == "product"]';
+  const product = await client.fetch(productQuery);
+  // console.log('Laptop Products:', product);
 
+
+
+  // Fetch banner data
   const bannerQuery = '*[_type == "banner"]';
   const bannerData = await client.fetch(bannerQuery);
+
   // Fetch categories
   const categoryQuery = '*[_type == "category"]';
   const categories = await client.fetch(categoryQuery);
+  const laptopCategoryQuery = '*[_type == "category" && name == "Laptop"]{_id}';
+  const laptopCategoryId = (await client.fetch(laptopCategoryQuery))[0]?._id;
 
+  // Fetch all products with the specified category _id
+  const laptopProductsQuery = `*[_type == "product" && category._ref == "${laptopCategoryId}"]`;
+  const laptopProducts = await client.fetch(laptopProductsQuery);
+  console.log('Laptop Products:', laptopProducts);
 
+  const phoneCategoryQuery = '*[_type == "category" && name == "Phones"]';
+  const phoneProducts = (await client.fetch(phoneCategoryQuery));
   return {
-    props: { products, bannerData, categories }
-  }
-}
+    props: { product, phoneProducts, laptopProducts, bannerData, categories },
+  };
+};
+
 
 export default Home;

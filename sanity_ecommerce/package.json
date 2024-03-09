@@ -16,11 +16,11 @@
   "dependencies": {
     "@sanity/base": "^2.36.2",
     "@sanity/client": "^6.14.2",
-    "@sanity/core": "^0.139.3",
+    "@sanity/core": "^2.36.2",
     "@sanity/default-layout": "^2.36.2",
     "@sanity/default-login": "^2.36.2",
     "@sanity/desk-tool": "^2.36.2",
-    "@sanity/eslint-config-studio": "^2.0.4",
+    "@sanity/eslint-config-studio": "^3.0.1",
     "@sanity/vision": "^2.36.2",
     "eslint": "^8.6.0",
     "prop-types": "^15.7",

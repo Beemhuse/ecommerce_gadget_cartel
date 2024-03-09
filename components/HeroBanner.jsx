@@ -2,27 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 
 import { urlFor } from '../lib/client';
+import HeaderSlides from './slides/HeaderSlides';
 
 const HeroBanner = ({ heroBanner }) => {
   return (
-    <div className="hero-banner-container">
-      <div>
-        <p className="">{heroBanner.smallText}</p>
-        <h3>{heroBanner.midText}</h3>
-        <h1>{heroBanner.largeText1}</h1>
-        {/* <img src={urlFor(heroBanner.image)} alt="headphones" className="w-full h-[20vh]" /> */}
-        <div className="w-full  bg-cover bg-center h-full" style={{ backgroundImage: `url(${urlFor(heroBanner.image)})` }} />
-
-        <div>
-          <Link href={`/product/${heroBanner.product}`}>
-            <button type="button">{heroBanner.buttonText}</button>
-          </Link>
-          <div className="desc">
-            <h5>Description</h5>
-            <p>{heroBanner.desc}</p>
-          </div>
-        </div>
-      </div>
+    <div className=" h-[60vh] overflow-hidden ">
+      <HeaderSlides />
     </div>
   )
 }
