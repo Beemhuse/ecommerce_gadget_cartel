@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { client } from '../lib/client';
-import { Product, MobileProducts, LaptopProducts, HeroBanner, ShopSale } from '../components';
+import { Product, MobileProducts, LaptopProducts, HeroBanner, ShopSale, Features } from '../components';
 
 const Home = ({ products, bannerData, categories, laptopProducts }) => {
 console.log(laptopProducts)
@@ -10,7 +10,7 @@ console.log(laptopProducts)
   <div>
 
     <HeroBanner heroBanner={bannerData?.length && bannerData[0]}  />
-  
+    <Features />
     <MobileProducts products={products} />
     <LaptopProducts products={laptopProducts} />
     <ShopSale />

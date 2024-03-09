@@ -8,3 +8,4 @@ export { default as Cart } from './Cart';
 export { default as MobileProducts } from './MobileProducts';
 export { default as LaptopProducts } from './LaptopProducts';
 export {default as ShopSale} from "./ShopSale"
+export {default as Features} from "./Features"
