@@ -57,7 +57,7 @@ width: 100%;
   white-space: nowrap;
   will-change: transform;
   animation: marquee 15s linear infinite;
-  width: 180%;
+  width: 140%;
 }
 .track:hover {
   animation-play-state: paused;

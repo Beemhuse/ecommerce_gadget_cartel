@@ -46,7 +46,7 @@ const HeaderSlides = () => {
             <div className="flex items-center justify-center gap-2 md:gap-10 mt-5 md:mt-10">
               <button
                 // onClick={() => dispatch(setAuthModal("SIGNUP"))}
-                className="text-xs md:text-base font-semibold px-7 py-3 text-black bg-[#F38948] border-2 border-[#F38948] outline-none"
+                className="text-xs md:text-base font-semibold px-7 py-3 text-white bg-[#F02D34] border-2 border-0 outline-none"
               >
                 Get Started
               </button>
@@ -55,9 +55,9 @@ const HeaderSlides = () => {
                 //   scrollToTop();
                 //   navigate("/services");
                 }}
-                className="text-xs md:text-base font-semibold px-7 py-3  text-black border-2 border-white outline-none"
+                className="text-xs md:text-base  font-semibold px-7 py-3  text-black border-2 border-[#F02D34] outline-none"
               >
-                What We Do
+                Contact us
               </button>
             </div>
           </div>
@@ -68,14 +68,13 @@ const HeaderSlides = () => {
           {/* <img src={cubes_img} alt="" className="w-full h-full object-cover" /> */}
           <div className="absolute flex flex-col gap-3 md:gap-7 justify-center items-center top-0 right-0 bottom-0 left-0 bg-opacity-10 text-white px-10 mt-12 lg:mt-0">
             <p className="uppercase md:text-xl text-center text-black font-semibold lg:w-[70vw] xl:w-[60vw] mb-5 md:mt-5">
-              Welcome to Nanocodes Programming
+              Welcome to Gadget Cartel
             </p>
             <p className="capitalize text-2xl md:text-5xl text-center text-black font-semibold lg:w-[60vw] xl:w-[45vw] leading-normal">
-              Build and Ship reliable software with on-demand engineering teams
-            </p>
+Best deals awaits you!            </p>
             <div className="flex items-center justify-center gap-2 md:gap-10 mt-5 md:mt-10">
               <button
-                className="text-xs md:text-base font-semibold px-7 py-3 text-black bg-[#F38948] border-2 border-[#F38948] outline-none"
+                className="text-xs md:text-base font-semibold px-7 py-3 text-white bg-[#F02D34] border-2 border-0 outline-none"
               >
                 Get Started
               </button>
@@ -84,9 +83,9 @@ const HeaderSlides = () => {
                 //   scrollToTop();
                 //   navigate("/services");
                 }}  
-                className="text-xs md:text-base font-semibold px-7 py-3  text-black border-2 border-white outline-none"
+                className="text-xs md:text-base font-semibold px-7 py-3  text-black border-2 border-[#F02D34] outline-none"
               >
-                What We Do
+                Contact us
               </button>
             </div>
           </div>

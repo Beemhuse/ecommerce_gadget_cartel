@@ -11,8 +11,8 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className=" mt-auto text-black mt-8">
-      <div className="grid grid-cols-3 w-4/5 mx-auto">
+    <footer className=" mt-auto text-black mb-8">
+      <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full p-4 gap-4  xl:w-4/5 mx-auto">
         <div className="div">
           <h2 className="text-2xl">Gadget Cartel</h2>
           <p className="text-gray-400 mt-4">
@@ -50,8 +50,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <hr className="my-4" />
-      <div className="flex justify-around">
+      <hr className="my-4 w-full" />
+      <div className="flex xl:flex-row flex-col p-4 justify-around">
         <p className="flex items-center gap-1">
           {" "}
           <span> Payment: </span> <FaCcVisa /> <FaCcMastercard />{" "}

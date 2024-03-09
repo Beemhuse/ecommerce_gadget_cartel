@@ -2,6 +2,7 @@ import { FaOpencart } from "react-icons/fa6";
 import React from 'react'
 import Product from "./Product";
 import Slider from "react-slick";
+import EmptyProduct from "./empty/EmptyProduct";
 const settings = {
     dots: true,
     infinite: true,
@@ -11,7 +12,7 @@ const settings = {
   };
 
 export default function MobileProducts({products}) {
-    console.log(products)
+    console.log("phone products ==> ", products)
   return (
     <div className=" px-8 w-2/3 mx-auto overflow-hidden">
         <div className="flex justify-between">

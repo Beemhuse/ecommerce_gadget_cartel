@@ -3,7 +3,7 @@ import React from 'react';
 import { client } from '../lib/client';
 import { Product, MobileProducts, LaptopProducts, HeroBanner, ShopSale, Features } from '../components';
 
-const Home = ({ products, bannerData, categories, laptopProducts }) => {
+const Home = ({ products, bannerData, categories,phoneProducts, laptopProducts }) => {
 console.log(laptopProducts)
   return (
 
@@ -11,11 +11,10 @@ console.log(laptopProducts)
 
     <HeroBanner heroBanner={bannerData?.length && bannerData[0]}  />
     <Features />
-    <MobileProducts products={products} />
+    <MobileProducts products={phoneProducts} />
     <LaptopProducts products={laptopProducts} />
     <ShopSale />
 
-    {/* <FooterBanner footerBanner={bannerData && bannerData[0]} /> */}
   </div>
 
   )
@@ -44,10 +43,13 @@ export const getServerSideProps = async () => {
   // Fetch all products with the specified category _id
   const laptopProductsQuery = `*[_type == "product" && category._ref == "${laptopCategoryId}"]`;
   const laptopProducts = await client.fetch(laptopProductsQuery);
-  console.log('Laptop Products:', laptopProducts);
 
-  const phoneCategoryQuery = '*[_type == "category" && name == "Phones"]';
-  const phoneProducts = (await client.fetch(phoneCategoryQuery));
+  const phoneCategoryQuery = '*[_type == "category" && name == "Phone"]{_id}';
+  const phoneCategoryId = (await client.fetch(phoneCategoryQuery))[0]?._id;
+  const phoneProductsQuery = `*[_type == "product" && category._ref == "${phoneCategoryId}"]`;
+  const phoneProducts = await client.fetch(phoneProductsQuery);
+  console.log('phone Products:', phoneProducts);
+
   return {
     props: { product, phoneProducts, laptopProducts, bannerData, categories },
   };
