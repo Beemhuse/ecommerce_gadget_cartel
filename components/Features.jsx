@@ -12,9 +12,9 @@ const features = [
   ];
 export default function Features() {
   return (
-    <div className='grid w-5/6 grid-cols-3 mx-auto  gap-6 my-[80px]'>
+    <div className='grid xl:w-5/6 w-full grid-cols-1 xl:grid-cols-3 mx-auto  gap-6 my-[80px]'>
        {features.map((feature, index) => (
-        <div key={index} className='text-2xl w-5/6 mx-auto  flex  items-start gap-4 hover:border-r-4 hover:border-[#F02D34]'>
+        <div key={index} className='text-2xl xl:w-5/6 w-full p-3 mx-auto  flex  items-start gap-4 hover:border-r-4 hover:border-[#F02D34]'>
          <div className="text-3xl text-[#F02D34]">
 
           {feature.icon}

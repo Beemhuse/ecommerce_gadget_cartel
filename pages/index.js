@@ -3,7 +3,7 @@ import React from 'react';
 import { client } from '../lib/client';
 import { Product, MobileProducts, LaptopProducts, HeroBanner, ShopSale, Features } from '../components';
 
-const Home = ({ products, bannerData, categories,phoneProducts, laptopProducts }) => {
+const Home = ({  bannerData, phoneProducts, laptopProducts }) => {
 console.log(laptopProducts)
   return (
 
@@ -46,6 +46,7 @@ export const getServerSideProps = async () => {
 
   const phoneCategoryQuery = '*[_type == "category" && name == "Phone"]{_id}';
   const phoneCategoryId = (await client.fetch(phoneCategoryQuery))[0]?._id;
+
   const phoneProductsQuery = `*[_type == "product" && category._ref == "${phoneCategoryId}"]`;
   const phoneProducts = await client.fetch(phoneProductsQuery);
   console.log('phone Products:', phoneProducts);

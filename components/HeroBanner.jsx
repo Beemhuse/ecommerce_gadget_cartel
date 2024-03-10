@@ -6,7 +6,7 @@ import HeaderSlides from './slides/HeaderSlides';
 
 const HeroBanner = ({ heroBanner }) => {
   return (
-    <div className=" h-[60vh]  ">
+    <div className="  overflow-hidden ">
       <HeaderSlides />
     </div>
   )

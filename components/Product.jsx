@@ -11,7 +11,7 @@ const Product = ({ product: { image, name, slug, description, price } }) => {
     <div className="relative">
     <Link href={`/product/${slug?.current}`}>
       <div
-        className=" w-2/4 relative transform flex flex-col transition-transform duration-300 hover:scale-105"
+        className=" xl:w-2/4 w-full relative transform flex flex-col transition-transform duration-300 hover:scale-105"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -23,8 +23,8 @@ const Product = ({ product: { image, name, slug, description, price } }) => {
         <div className="flex flex-col">
         <div className="flex items-center p-3  justify-between">
 
-        <p className="font-bold my-7 text-xl">{name}</p>
-        <p className='text-[#F02D34] font-bold'>N{price}</p>
+        <p className="font-bold my-7 xl:text-xl text-lg">{name}</p>
+        <p className='text-[#F02D34] font-bold text-md'>N{price}</p>
 
         </div>
 
