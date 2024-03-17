@@ -36,7 +36,7 @@ const Navbar = () => {
     setOpen(inOpen);
   };
   return (
-    <div className="flex justify-between items-center mb-8 py-5 p-2  px-4  bg-black">
+    <div className="flex justify-between items-center mb-8 py-5 p-2 top-0 w-full z-index-100000  px-4  bg-black">
       <p className=" xl:w-2/3 text-white">
         <Link href="/">Gadget Cartel</Link>
       </p>

@@ -5,7 +5,8 @@ import { client } from "../../lib/client";
 export default function index({ product }) {
   return (
     <section>
-    <div className="flex items-center">
+      <h2 className="text-center xl:text-3xl text-xl text-gray-400 ">All Products</h2>
+    <div className="flex items-center justify-center">
       {product?.map((product) => (
         <Product key={product?._id} product={product} />
       ))}

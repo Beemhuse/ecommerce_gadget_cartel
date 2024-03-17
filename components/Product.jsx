@@ -11,7 +11,7 @@ const Product = ({ product: { image, name, slug, description, price } }) => {
     <div className="relative">
     <Link href={`/product/${slug?.current}`}>
       <div
-        className=" xl:w-2/4 w-full relative transform flex flex-col transition-transform duration-300 hover:scale-105"
+        className=" xl:max-w-2/4 lg:w-2/4 w-full relative transform flex flex-col transition-transform duration-300 hover:scale-105"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >

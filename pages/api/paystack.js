@@ -1,7 +1,7 @@
 // // pages/api/createOrder.js
 import { createOrder } from '../../lib/client';
 import {  initializePaystack } from '../../lib/paystack';
-import { verifyPaystackPayment } from './verify';
+// import { verifyPaystackPayment } from './verify';
 
 
 
@@ -14,14 +14,14 @@ export default async function handler(req, res) {
     const { cartItems, amount, email, location, deliveryAddress } = req.body;
 
     const paymentResponse = await initializePaystack(email, amount);
-    console.log("paystack ==>", paymentResponse)
+    // console.log("paystack ==>", paymentResponse)
 const transactionRef = paymentResponse.reference
     
-    const isPaymentVerified = await verifyPaystackPayment(transactionRef);
+    // const isPaymentVerified = await verifyPaystackPayment (transactionRef);
     
-    if (!isPaymentVerified) {
-      return res.status(400).json({ error: 'Payment verification failed' });
-    }
+    // if (!isPaymentVerified) {
+    //   return res.status(400).json({ error: 'Payment verification failed' });
+    // }
 
     // If payment is verified, create the order in Sanity
     const order = await createOrder(cartItems, amount, email, location, deliveryAddress, transactionRef);

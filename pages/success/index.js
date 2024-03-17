@@ -41,6 +41,7 @@ const Success = () => {
       fetchVerificationResult();
     }
   }, [trxref]);
+  
   return (
     <div className="success-wrapper">
       <div className="success">
@@ -51,12 +52,12 @@ const Success = () => {
         <p className="email-msg">Check your email inbox for the receipt.</p>
         <p className="description">
           If you have any questions, please email
-          <a className="email" href="mailto:gadgetcartelstore@gmail.com">
-            gadgetcartelstore@gmail.com
+          <a className="email" href="mailto:gadgetcartel@gmail.com">
+            gadgetcartel@gmail.com
           </a>
         </p>
         <Link href="/orders">
-          <button type="button" width="300px" className="btn">
+          <button type="button" width="300px" className="btn capitalize">
             See your orders
           </button>
         </Link>

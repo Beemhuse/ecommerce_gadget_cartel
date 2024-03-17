@@ -8,16 +8,15 @@ export default {
     fields: [
     {
       name: 'orderNumber',
-      title: 'Order Number',
+      title: 'Order Id',
       type: 'string',
       validation: (Rule) => Rule.required(),
     },
     {
-      name: 'customer',
+      name: 'email',
       title: 'Customer',
-      type: 'reference',
-      to: [{ type: 'customer' }],
-      validation: (Rule) => Rule.required(),
+      type: 'string',
+      validation: (Rule) => Rule.required().email(),
     },
     {
       name: 'cartItems',
@@ -28,25 +27,26 @@ export default {
     },
     {
       name: 'amount',
-      title: 'Total Amount',
+      title: 'Total Amount (N)',
       type: 'number',
       validation: (Rule) => Rule.required().min(0),
     },
     {
       name: 'status',
-      title: 'Order Status',
+      title: 'Payment Status',
       type: 'string',
-      options: {  
-        list: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
-      },
       validation: (Rule) => Rule.required(),
+      // options: {  
+      //   list: ['Pending', 'Failed', 'Success'],
+      // },
+      // validation: (Rule) => Rule.required(),
     },
-    {
-      name: 'email',
-      title: 'Customer Email',
-      type: 'string',
-      validation: (Rule) => Rule.required().email(),
-    },
+    // {
+    //   name: 'email',
+    //   title: 'Customer Email',
+    //   type: 'string',
+    //   validation: (Rule) => Rule.required().email(),
+    // },
     {
       name: 'location',
       title: 'Delivery Location',

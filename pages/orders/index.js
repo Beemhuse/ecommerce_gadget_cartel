@@ -2,55 +2,34 @@
 import React, { useEffect, useState } from 'react';
 import { client } from '../../lib/client';
 import Link from 'next/link';
+import OrderTable from '../../components/table/OrderTable';
 // import sanityClient from '../lib/sanityClient';
+import { FcNext, FcPrevious } from "react-icons/fc";
 
 const OrdersPage = ({ orders, totalPages, currentPage }) => {
   return (
-    <div>
-      <h1>Orders</h1>
+    <div className="px-[50px]">
+      <h1 className='text-center font-bold text-2xl my-8'>All Orders</h1>
       {orders.length === 0 ? (
         <p>No orders available</p>
       ) : (
         <>
-        
-        <table>
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Email</th>
-              <th>Amount</th>
-              {/* Add more columns based on your order schema */}
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id}</td>
-                <td>{order.email}</td>
-                <td>${order.amount}</td>
-                {/* Add more cells based on your order schema */}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="pagination">
+        <OrderTable orders={orders} />
+     
+        <div className="flex justify-center items-center mt-8 gap-4">
 {currentPage > 1 && (
-    <Link href={`/orders?page=${currentPage - 1}`}>
-      <button>&lt;</button>
+    <Link href={`/orders?page=${currentPage - 1}`} className={'text-xl'}>
+      <button><FcPrevious /></button>
     </Link>
   )}
+<span className={'text-xl'}>
 
-  {Array.from({ length: totalPages }, (_, index) => (
-    <Link href={`/orders?page=${index + 1}`} key={index + 1}>
-      <button className={currentPage === index + 1 ? 'active' : ''}>
-        {index + 1}
-      </button>
-    </Link>
-  ))}
+{currentPage}
+</span>
 
   {currentPage < totalPages && (
-    <Link href={`/orders?page=${currentPage + 1}`}>
-      <button>&gt;</button>
+    <Link href={`/orders?page=${currentPage + 1}`} className={'text-xl'}>
+      <button><FcNext /></button>
     </Link>
   )}
 </div>
@@ -76,7 +55,7 @@ export async function getServerSideProps({ query }) {
           _id,
           email,
           amount,
-          // Add more fields based on your order schema
+          cartItems
         }
       `);
   

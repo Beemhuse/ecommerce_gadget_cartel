@@ -21,7 +21,7 @@ useEffect(() => {
 
   console.log(categories);
   return (
-    <div>
+    <div className="p-4">
       <CategoryList
         categories={categories}
         handleCategoryClick={handleCategoryClick}

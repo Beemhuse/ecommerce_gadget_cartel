@@ -14,6 +14,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Slider from "react-slick";
+import { useRouter } from "next/router";
 
 
 const settings = {
@@ -28,7 +29,7 @@ const settings = {
   };
 
 const HeaderSlides = () => {
-
+const router = useRouter()
   return (
     <Slider {...settings}
 
@@ -45,16 +46,14 @@ const HeaderSlides = () => {
             </p>
             <div className="flex items-center justify-center gap-2 md:gap-10 mt-5 md:mt-10">
               <button
-                // onClick={() => dispatch(setAuthModal("SIGNUP"))}
+                onClick={() => router.push("products")}
                 className="text-xs md:text-base font-semibold px-7 py-3 text-white bg-[#F02D34] border-2 border-0 outline-none"
               >
-                Get Started
+                Shop now
               </button>
               <button
-                onClick={() => {
-                //   scrollToTop();
-                //   navigate("/services");
-                }}
+
+              onClick={() => router.push("contact")}
                 className="text-xs md:text-base  font-semibold px-7 py-3  text-black border-2 border-[#F02D34] outline-none"
               >
                 Contact us
@@ -74,9 +73,10 @@ const HeaderSlides = () => {
 Best deals awaits you!            </p>
             <div className="flex items-center justify-center gap-2 md:gap-10 mt-5 md:mt-10">
               <button
+              onClick={() => router.push("products")}
                 className="text-xs md:text-base font-semibold px-7 py-3 text-white bg-[#F02D34] border-2 border-0 outline-none"
               >
-                Get Started
+                Shop now
               </button>
               <button
                 onClick={() => {
