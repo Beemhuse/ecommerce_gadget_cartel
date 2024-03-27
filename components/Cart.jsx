@@ -117,7 +117,7 @@ console.log(user)
               <div className="w-full  flex flex-col gap-4">
                 <div className="flex w-full items-center justify-between">
                   <h5>{item?.name}</h5>
-                  <h4>${item?.price}</h4>
+                  <h4>N{item?.price}</h4>
                 </div>
                 <div className="flex justify-between items-center   ">
                 <div className="quantity-desc grid grid-cols-3  items-center w-2/3 ">
@@ -143,7 +143,7 @@ console.log(user)
           <div className="cart-bottom">
             <div className="total">
               <h3>Subtotal:</h3>
-              <h3>${totalPrice}</h3>
+              <h3>N{totalPrice}</h3>
             </div>
             <div className="mt-6">
               <button type="button" 

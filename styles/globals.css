@@ -4,6 +4,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .shadow-custom {
+    box-shadow: -8px -3px 5px -6px #fff;
+    background: #ecebf5;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .slide1{
+    background: url("../public/assets/gadget_3.jpg") no-repeat;
+    background-size: cover;
+    background-position: bottom center;
+  }
+  .slide2{
+    background: url("../public/assets/gadget_2.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+}
+
 html,
 body, * {
   padding: 0;

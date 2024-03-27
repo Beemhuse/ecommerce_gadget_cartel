@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { client, urlFor } from "../../lib/client";
 import CategoryList from "../../components/collection/CategoryList";
+import Link from "next/link";
 
 const Index = ({ categories }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -29,9 +30,9 @@ useEffect(() => {
       />
 
       {selectedCategory && (
-        <div className="mt-5 flex gap-5">
+        <div className="mt-5 flex flex-wrap gap-5">
           {selectedCategory?.products?.map((product) => (
-            <div key={product?._id} className="border p-2 rounded-lg flex flex-col">
+            <Link href={`/product/${product?.slug?.current}`} key={product?._id} className="border p-2 rounded-lg flex cursor-pointer flex-col">
               <img
                 src={urlFor(product?.image && product?.image[0])}
                 width={250}
@@ -40,12 +41,14 @@ useEffect(() => {
               />
             
               <div className="flex gap-2 mt-auto ">
-              <h2 className="font-bold">{"Name"}:</h2>
+              <h2 className="font-semibold">{"Name"}:</h2>
               <h2 className="">{product?.name}</h2>
 
               </div>
-              <p className="">Price: ${product?.price}</p>
-            </div>
+              div
+              <p className="font-semibold">Price: </p>
+              <span>{product?.price}</span>
+            </Link>
           ))}
         </div>
       )}

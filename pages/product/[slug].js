@@ -55,22 +55,11 @@ const handleBuyNow = () => {
         </div>
 
         <div className="product-detail-desc">
-          <h1>{name}</h1>
-          <div className="reviews">
-            <div className='flex gap-3'>
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiOutlineStar />
-            </div>
-            <p>
-              (20)
-            </p>
-          </div>
-          <h4>Details: </h4>
-          <p>{details}</p>
-          <p className="price">${price}</p>
+          <h1 className='font-semibold text-xl'>{name}</h1>
+        
+          <h4>Specifications: </h4>
+          <p  className='max-h-[200px] overflow-y-scroll no-scrollbar'>{details}</p>
+          <p className="price">N{price}</p>
           <div className="quantity">
             <h3>Quantity:</h3>
             <p className="quantity-desc flex items-center">

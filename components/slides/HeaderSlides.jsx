@@ -1,11 +1,4 @@
-import {
-  A11y,
-  Autoplay,
-  Navigation,
-  Pagination,
-  Scrollbar,
-} from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+
 import React from "react";
 // Import Swiper styles
 import "swiper/css";
@@ -35,13 +28,13 @@ const router = useRouter()
 
       >
       <div className="">
-        <div className="mb-20 relative w-[100vw] h-[70vh]">
+        <div className="mb-20 slide1 relative w-[100vw] h-[80vh]">
           {/* <img src={bg_img} alt="" className="w-full h-full object-cover" /> */}
-          <div className="absolute flex flex-col gap-3 md:gap-7 justify-center items-center top-0 right-0 bottom-0 left-0  text-white px-10 mt-12 lg:mt-0">
-            <p className="uppercase text-2xl md:text-5xl  text-center text-black font-semibold lg:w-[70vw] xl:w-[60vw] mb-5 md:mt-5">
+          <div className="absolute bg-black bg-opacity-40 flex flex-col gap-3 md:gap-7 justify-center items-center top-0 right-0 bottom-0 left-0  text-white px-10 mt-12 lg:mt-0">
+            <p className="uppercase text-2xl md:text-5xl  text-center  font-semibold lg:w-[70vw] xl:w-[60vw] mb-5 md:mt-5">
               Welcome to Gadget Cartel
             </p>
-            <p className="capitalize md:text-xl text-center text-black font-semibold lg:w-[60vw] xl:w-[45vw] leading-normal">
+            <p className="capitalize md:text-xl text-center  font-semibold lg:w-[60vw] xl:w-[45vw] leading-normal">
               Home of  gadgets and software products for all. 
             </p>
             <div className="flex items-center justify-center gap-2 md:gap-10 mt-5 md:mt-10">
@@ -63,13 +56,13 @@ const router = useRouter()
         </div>
       </div>
       <div className="">
-        <div className="mb-20  relative w-[100vw]  h-[70vh]">
+        <div className="mb-20 slide2  relative w-[100vw]  h-[80vh]">
           {/* <img src={cubes_img} alt="" className="w-full h-full object-cover" /> */}
-          <div className="absolute flex flex-col gap-3 md:gap-7 justify-center items-center top-0 right-0 bottom-0 left-0 bg-opacity-10 text-white px-10 mt-12 lg:mt-0">
-            <p className="uppercase md:text-xl text-center text-black font-semibold lg:w-[70vw] xl:w-[60vw] mb-5 md:mt-5">
+          <div className="absolute flex bg-black bg-opacity-40  flex-col gap-3 md:gap-7 justify-center items-center top-0 right-0 bottom-0 left-0 bg-opacity-10 text-white px-10 mt-12 lg:mt-0">
+            <p className="uppercase md:text-xl text-center font-semibold lg:w-[70vw] xl:w-[60vw] mb-5 md:mt-5">
               Welcome to Gadget Cartel
             </p>
-            <p className="capitalize text-2xl md:text-5xl text-center text-black font-semibold lg:w-[60vw] xl:w-[45vw] leading-normal">
+            <p className="capitalize text-2xl md:text-5xl text-center  font-semibold lg:w-[60vw] xl:w-[45vw] leading-normal">
 Best deals awaits you!            </p>
             <div className="flex items-center justify-center gap-2 md:gap-10 mt-5 md:mt-10">
               <button

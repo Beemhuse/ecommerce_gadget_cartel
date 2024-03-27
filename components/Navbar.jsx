@@ -10,15 +10,17 @@ import { useRouter } from "next/router";
 import { Drawer } from "@mui/joy";
 
 const navigationLinks = [
+  { path: "/", label: "Home" },
   { path: "/collections", label: "Collections" },
   { path: "/products", label: "Products" },
+  { path: "/about", label: "About us" },
+  { path: "/contact", label: "Contact us" },
   // Add more navigation items as needed
 ];
 
 const Navbar = () => {
   // const { showCart, setShowCart, totalQuantities } = useStateContext();
   const router = useRouter();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
 
   const { showCart,  totalQuantities } = useSelector(
@@ -36,11 +38,11 @@ const Navbar = () => {
     setOpen(inOpen);
   };
   return (
-    <div className="flex justify-between items-center mb-8 py-5 p-2 top-0 w-full z-index-100000  px-4  bg-black">
+    <div className="flex justify-between text-black items-center mb-8 py-5 p-2 top-0 w-full z-index-100000  px-4  ">
       <p className=" xl:w-2/3 text-white">
-        <Link href="/">Gadget Cartel</Link>
+        <Link href="/"> <img src="gadget_logo.jpg" width={50} height={50} alt="logo" /> </Link> 
       </p>
-      <ul className="xl:flex hidden text-white items-center gap-6 w-full  justify-center">
+      <ul className="xl:flex hidden  items-center gap-6 w-full  justify-center">
         {navigationLinks.map((link) => (
           <li
             className={`border-b-2 border-transparent group-hover:border-red-500 ${
@@ -54,7 +56,7 @@ const Navbar = () => {
 
          
 
-      <div className="flex   items-center text-white gap-4 w-2/3  justify-end ">
+      <div className="flex   items-center text-black gap-4 w-2/3  justify-end ">
         <Link href={"/orders"} className="xl:flex hidden  ">View orders</Link>
         <button type="button" className="cart-icon" onClick={handleShowCart}>
           <span className="cart-item-qty">{totalQuantities}</span>
