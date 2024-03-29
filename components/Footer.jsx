@@ -16,8 +16,7 @@ const Footer = () => {
         <div className="div">
           <h2 className="text-2xl">Gadget Cartel</h2>
           <p className="text-gray-400 mt-4">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-            Perspiciatis{" "}
+          Home of everything gadget and accessories.
           </p>
           <div className="flex items-center gap-4 text-gray-400 mt-5 ">
             <AiFillInstagram className="hover:text-black cursor-pointer" />
