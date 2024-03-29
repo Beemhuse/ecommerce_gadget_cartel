@@ -9,6 +9,8 @@ export default function GeneralLayout({ children }) {
     <div className='w-full min-h-screen flex flex-col'>
     <Head>
         <title>Gadget Cartel</title>
+        <script src="//code.jivosite.com/widget/xTakpEJjjr" async></script>
+
       </Head>
       <header>
         <Navbar />
