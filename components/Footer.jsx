@@ -40,12 +40,12 @@ const Footer = () => {
             <p className="text-gray-400">
               Do you have any queries or suggestions?
             </p>
-            <a href="">gadgetcartel@gmail.com</a>
+            <a href="">gadgetcartelng@gmail.com</a>
 
             <p className="text-gray-400">
               If you need support? Just give us a call.{" "}
             </p>
-            <p>+234 1222 333 44</p>
+            <p>+2349166671569</p>
           </div>
         </div>
       </div>
