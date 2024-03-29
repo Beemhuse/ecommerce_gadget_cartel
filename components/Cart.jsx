@@ -1,32 +1,26 @@
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
-import { AiOutlineMinus, AiOutlinePlus, AiOutlineLeft, AiOutlineShopping } from 'react-icons/ai';
-import { TiDeleteOutline } from 'react-icons/ti';
-import { createOrder, urlFor } from '../lib/client';
+import {  AiOutlineLeft, AiOutlineShopping } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { decrementQuantity, incrementQuantity, removeCartItem,  toggleCart } from '../store/reducers/cartReducer';
+import {  removeCartItem,  toggleCart } from '../store/reducers/cartReducer';
 import axios from 'axios';
 import useLoggedInStatus from '../hooks/useLoggedinStatus';
 import CircularSpinner from './spinner/CircularSpinner';
 import { Cookies } from 'react-cookie';
 import { useRouter } from 'next/router';
+import CartProduct from './CartProduct';
+import useCurrencyFormatter from '../hooks/useCurrencyFormatter';
 
-function generateTransactionNumber(prefix) {
-  // Generate a random 7-digit number
-  const randomDigits = Math.floor(Math.random() * 9000000) + 1000000;
 
-  // Combine the prefix and random number
-  const transactionNumber = prefix + randomDigits;
-
-  return transactionNumber;
-}
 
 // Example usage with a prefix
 // const transactionNumber = generateTransactionNumber('GC');
 const Cart = () => {
   const cartRef = useRef();
-  const { showCart, cartItems, totalPrice,  totalQuantities, qty } = useSelector((state) => state?.cart);
+  const {  cartItems, totalPrice,  totalQuantities, } = useSelector((state) => state?.cart);
   const dispatch =useDispatch()
+const formatCurrency = useCurrencyFormatter("NGN")
+  
   const [loading, setLoading] = useState(false)
 console.log(totalQuantities)
 const isLoggedIn = useLoggedInStatus();
@@ -38,9 +32,7 @@ console.log(user)
     dispatch(toggleCart());
   
   }
-  const handleRemoveFromCart = (product) => {
-    dispatch(removeCartItem({ product }));
-  };
+ 
   const handleCheckout = async () => {
     try {
       if (!isLoggedIn) {
@@ -112,38 +104,14 @@ console.log(user)
 
         <div className="product-container">
           {cartItems?.length >= 1 && cartItems?.map((item) => (
-            <div className="product" key={item._id}>
-              <img src={urlFor(item?.image[0])} className="w-[150px] h-auto rounded-lg" />
-              <div className="w-full  flex flex-col gap-4">
-                <div className="flex w-full items-center justify-between">
-                  <h5>{item?.name}</h5>
-                  <h4>N{item?.price}</h4>
-                </div>
-                <div className="flex justify-between items-center   ">
-                <div className="quantity-desc grid grid-cols-3  items-center w-2/3 ">
-              <p className="px-3 minus cursor-pointer" onClick={() => dispatch(decrementQuantity({ id: item?._id })) }><AiOutlineMinus /></p>
-              <p className="px-3 num">{item?.quantity}</p>
-              <p className="px-3 plus cursor-pointer" onClick={() => dispatch(incrementQuantity({ id: item?._id })) }><AiOutlinePlus /></p>
-            </div>
-                
-                  <button
-                    type="button"
-                    className="remove-item"
-                    onClick={()=> handleRemoveFromCart(item)}
-                  
-                  >
-                    <TiDeleteOutline />
-                  </button>
-                </div>
-              </div>
-            </div>
+            <CartProduct item={item} key={item?._id} />
           ))}
         </div>
         {cartItems.length >= 1 && (
           <div className="cart-bottom">
             <div className="total">
               <h3>Subtotal:</h3>
-              <h3>N{totalPrice}</h3>
+              <h3>{formatCurrency(totalPrice)}</h3>
             </div>
             <div className="mt-6">
               <button type="button" 

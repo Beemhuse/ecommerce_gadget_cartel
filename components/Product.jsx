@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 
 import { urlFor } from '../lib/client';
+import useCurrencyFormatter from '../hooks/useCurrencyFormatter';
 
 const Product = ({ product: { image, name, slug, description, price } }) => {
   const [isHovered, setIsHovered] = useState(false);
-
+const formatCurrency = useCurrencyFormatter("NGN")
   console.log(image)
   return (
     <div className="relative">
@@ -24,7 +25,7 @@ const Product = ({ product: { image, name, slug, description, price } }) => {
         <div className="flex items-center p-3  justify-between">
 
         <p className="font-bold my-7 xl:text-xl text-lg">{name}</p>
-        <p className='text-[#F02D34] font-bold text-md'>N{price}</p>
+        <p className='text-[#F02D34] font-bold text-md'>{formatCurrency(price)}</p>
 
         </div>
 
