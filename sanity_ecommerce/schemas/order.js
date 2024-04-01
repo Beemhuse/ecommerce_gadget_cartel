@@ -1,14 +1,13 @@
-// schema.js
 
 export default {
-    name: 'order',
-    title: 'Order',
-    type: 'document',
-    readOnly: true, // Make the entire document read-only
-    fields: [
+  name: 'order',
+  title: 'Order',
+  type: 'document',
+  readOnly: true, // Make the entire document read-only
+  fields: [
     {
-      name: 'orderNumber',
-      title: 'Order Id',
+      name: 'orderId', // Add the _id field
+      title: 'Order Number', // Change to Order Number for clarity
       type: 'string',
       validation: (Rule) => Rule.required(),
     },
@@ -36,17 +35,7 @@ export default {
       title: 'Payment Status',
       type: 'string',
       validation: (Rule) => Rule.required(),
-      // options: {  
-      //   list: ['Pending', 'Failed', 'Success'],
-      // },
-      // validation: (Rule) => Rule.required(),
     },
-    // {
-    //   name: 'email',
-    //   title: 'Customer Email',
-    //   type: 'string',
-    //   validation: (Rule) => Rule.required().email(),
-    // },
     {
       name: 'location',
       title: 'Delivery Location',
@@ -60,31 +49,23 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
-      name: 'createdAt',
+      name: 'transactionDate',
       title: 'Order Date',
       type: 'datetime',
       validation: (Rule) => Rule.required(),
     },
   ],
-    preview: {
-      select: {
-        title: 'orderNumber',
-        customers: 'customers.*.name',
-        status: 'status',
-        createdAt: '_createdAt',
-      },
-      prepare(selection) {
-        const { title, customers, status, createdAt } = selection;
-        return {
-          title: `Order #${title}`,
-          subtitle: `Customers: ${customers.join(', ')} | Status: ${status}`,
-          description: `Placed on ${new Date(createdAt).toLocaleDateString()}`,
-        };
-      },
-      // Only show the preview when the order status is 'Placed'
-      filter: 'status == "Placed"',
+  preview: {
+    select: {
+      email: 'email',
+      deliveryAddress: 'deliveryAddress',
     },
-  };
-  
-  // ... (orderedItem and customer schemas)
-  
+    prepare(selection) {
+      const { email, deliveryAddress } = selection;
+      return {
+        title: email, // Display email as the title
+        subtitle: `Delivery Address: ${deliveryAddress}`, // Display delivery address as the subtitle
+      };
+    },
+  },
+};

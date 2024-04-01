@@ -1,16 +1,9 @@
 import React from "react";
 import Product from "./Product";
-import Slider from "react-slick";
 import EmptyProduct from "./empty/EmptyProduct";
 
 export default function MobileProducts({ products }) {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: products?.length, // Adjust the number of slides to show
-    slidesToScroll: 1,
-  };
+
   return (
     <div className=" px-8 xl:w-2/3 w-full mx-auto overflow-hidden">
       <div className="flex justify-between items-center">

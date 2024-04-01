@@ -5,9 +5,11 @@ import { client, urlFor } from '../../lib/client';
 import { Product } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem, decrementQuantity, incrementQuantity, toggleCart, toggleCartItemQuantity } from '../../store/reducers/cartReducer';
+import useCurrencyFormatter from '../../hooks/useCurrencyFormatter';
 
 const ProductDetails = ({ product, products }) => {
   const { image, name, details, price, _id } = product;
+
   const [index, setIndex] = useState(0);
   // const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
   const { showCart, cartItems, totalPrice, qty } = useSelector((state) => state.cart);
@@ -17,6 +19,8 @@ const ProductDetails = ({ product, products }) => {
 const dispatch = useDispatch()
 const itemInCart = cartItems.find((item) => item._id === _id);
 const itemQuantity = itemInCart ? itemInCart.quantity : qty;
+
+const formatCurrency = useCurrencyFormatter("NGN")
 
 const handleBuyNow = () => {
   dispatch(addCartItem({ product, quantity: qty }));
@@ -59,7 +63,7 @@ const handleBuyNow = () => {
         
           <h4>Specifications: </h4>
           <p  className='max-h-[200px] overflow-y-scroll no-scrollbar'>{details}</p>
-          <p className="price">N{price}</p>
+          <p className="price">{formatCurrency(price)}</p>
           <div className="quantity">
             <h3>Quantity:</h3>
             <p className="quantity-desc flex items-center">
