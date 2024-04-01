@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { client, urlFor } from "../../lib/client";
 import CategoryList from "../../components/collection/CategoryList";
 import Link from "next/link";
+import EmptyProduct from "../../components/empty/EmptyProduct";
 
 const Index = ({ categories }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -31,7 +32,12 @@ useEffect(() => {
 
       {selectedCategory && (
         <div className="mt-5 flex flex-wrap gap-5">
-          {selectedCategory?.products?.map((product) => (
+          {
+            selectedCategory?.products.length === 0 ? 
+            <EmptyProduct message={`No products in ${selectedCategory?.name} collection`} />:
+
+            <>
+             {selectedCategory?.products?.map((product) => (
             <Link href={`/product/${product?.slug?.current}`} key={product?._id} className="border p-2 rounded-lg flex cursor-pointer flex-col">
               <img
                 src={urlFor(product?.image && product?.image[0])}
@@ -45,11 +51,14 @@ useEffect(() => {
               <h2 className="">{product?.name}</h2>
 
               </div>
-              div
+            
               <p className="font-semibold">Price: </p>
               <span>{product?.price}</span>
             </Link>
           ))}
+            </>
+          }
+         
         </div>
       )}
     </div>

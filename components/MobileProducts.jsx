@@ -20,11 +20,9 @@ export default function MobileProducts({ products }) {
       <div className="my-[40px]">
         {products?.length === 0 ? (
           <>
-            <EmptyProduct />
+            <EmptyProduct message={"Products not found"} />
           </>
         ) : (
-          // <Slider {...settings}>
-          // </Slider>
           <>
             {products?.map((product, idx) => (
               <div key={idx} className="flex">

@@ -5,7 +5,7 @@
   },
   "api": {
     "projectId": "3823yhk4",
-    "dataset": "production"
+    "dataset": "gadgetcartel"
   },
   "plugins": [
     "@sanity/base",

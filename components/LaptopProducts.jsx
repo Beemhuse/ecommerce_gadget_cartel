@@ -1,6 +1,7 @@
 import React from 'react'
 import Slider from "react-slick";
 import Product from './Product';
+import EmptyProduct from './empty/EmptyProduct';
 const settings = {
     dots: true,
     infinite: true,
@@ -39,11 +40,21 @@ export default function LaptopProducts({products}) {
     </div>
     <div className="my-[40px]">
 
+{products?.length === 0 ? (
+          <>
+            <EmptyProduct message={"Products not found"} />
+          </>
+        ) : (
+          <>
 <Slider {...settings}>
-  {products?.map((product) => (
-    <Product key={product?._id} product={product} />
-  ))}
+            {products?.map((product, idx) => (
+              <div key={idx} className="flex">
+                <Product product={product} />
+              </div>
+            ))}
 </Slider>
+          </>
+        )}
     </div>
 </div>  )
 }
