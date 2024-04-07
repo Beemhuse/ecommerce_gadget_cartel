@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { cartItems, amount, email, location, deliveryAddress } = req.body;
+    const { cartItems, amount, email, note, phone, deliveryAddress } = req.body;
 
     const paymentResponse = await initializePaystack(email, amount);
     const transactionRef = paymentResponse?.data.reference;
@@ -19,6 +19,8 @@ export default async function handler(req, res) {
       email,
       deliveryAddress,
       transactionRef,
+      note,
+      phone
     );
 
     if (order?._id) {

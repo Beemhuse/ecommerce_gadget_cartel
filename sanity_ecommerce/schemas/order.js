@@ -20,6 +20,24 @@ export default {
       validation: (Rule) => Rule.required().email(),
     },
     {
+      name: 'note',
+      title: 'Delivery Note',
+      type: 'string',
+      validation: (Rule) => Rule.required()
+    },
+    {
+      name: 'phone',
+      title: 'Phone Number',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'transactionRef',
+      title: 'Transaction Reference',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: 'cartItems',
       title: 'Order Items',
       type: 'array',
