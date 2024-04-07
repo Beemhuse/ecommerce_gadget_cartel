@@ -14,13 +14,14 @@ export default async function handler(req, res) {
     console.log(isPaymentVerified)
     const newStatus = isPaymentVerified ? 'success' : 'failure';
 
+    await updateTransactionStatus(trxref, newStatus);
    // Update the transaction status in the database
-   if(trxref){
-     const updatedTransaction = await updateTransactionStatus(trxref, newStatus);
-     if (!updatedTransaction) {
-       return res.status(404).json({ error: 'Transaction not found' });
-     }
-   }
+  //  if(trxref){
+  //    const updatedTransaction = await updateTransactionStatus(trxref, newStatus);
+  //    if (!updatedTransaction) {
+  //      return res.status(404).json({ error: 'Transaction not found' });
+  //    }
+  //  }
 
     if (!isPaymentVerified) {
       return res.status(400).json({ error: 'Payment verification failed' });
