@@ -17,7 +17,6 @@ export default async function handler(req, res) {
       cartItems,
       amount,
       email,
-      location,
       deliveryAddress,
       transactionRef,
     );
@@ -27,7 +26,6 @@ export default async function handler(req, res) {
         order,
         amount,
         email,
-        location,
         deliveryAddress,
         transactionRef,
         'pending', // Set default status to 'pending' or adjust as needed

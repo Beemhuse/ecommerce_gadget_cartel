@@ -34,12 +34,6 @@ export default {
     },
    
     {
-      name: 'location',
-      title: 'Delivery Location',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    },
-    {
       name: 'deliveryAddress',
       title: 'Delivery Address',
       type: 'text',

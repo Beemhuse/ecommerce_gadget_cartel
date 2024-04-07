@@ -21,11 +21,7 @@ export default {
       title: 'Email',
       type: 'string',
     },
-    {
-      name: 'location',
-      title: 'Location',
-      type: 'string',
-    },
+ 
     {
       name: 'deliveryAddress',
       title: 'Delivery Address',
@@ -52,14 +48,15 @@ export default {
   ],
   preview: {
     select: {
-      order: 'order.orderNumber',
+      order: 'order.orderId',
       amount: 'amount',
       email: 'email',
+      ref: "transactionRef"
     },
     prepare(selection) {
-      const { order, amount, email } = selection;
+      const { order, amount, email, ref } = selection;
       return {
-        title: `Order: ${order}, Amount: ${amount}`,
+        title: `Ref: ${ref}, Amount: ${amount}`,
         subtitle: `Email: ${email}`,
       };
     },

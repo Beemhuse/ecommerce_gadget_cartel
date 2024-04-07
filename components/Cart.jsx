@@ -10,6 +10,7 @@ import { Cookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import CartProduct from './CartProduct';
 import useCurrencyFormatter from '../hooks/useCurrencyFormatter';
+import toast from 'react-hot-toast';
 
 
 
@@ -22,12 +23,11 @@ const Cart = () => {
 const formatCurrency = useCurrencyFormatter("NGN")
   
   const [loading, setLoading] = useState(false)
-console.log(totalQuantities)
+  const [deliveryAddress, setDeliveryAddress] = useState('')
 const isLoggedIn = useLoggedInStatus();
 const cookies = new Cookies();
 const router = useRouter()
 const user = cookies.get('GC_user');
-console.log(user)
   const handleShowCart =()=>{
     dispatch(toggleCart());
   
@@ -40,31 +40,36 @@ console.log(user)
         router.push('/signin');
         return;
       }
-      setLoading(true)
       // Call createOrder function before processing payment
       const amount = totalPrice
 
+      if(deliveryAddress !== "" ){
+        setLoading(true)
+
+        await axios.post('/api/paystack', {   cartItems,
+             amount,
+             email: user.email,
+             deliveryAddress: deliveryAddress,
+             
+           })
+   
+         .then((res)=>{
+           setLoading(false)
+   
+           console.log(res)
+           const paymentLink = res?.data?.paymentResponse?.data?.authorization_url;
+           console.log(paymentLink)
+           if(paymentLink){
+             window.location.href = paymentLink;
+   
+             //  createOrder(cartItems, amount, "bright@mail.com", 'Some Location', '123 Main Street, City' );
+           }
+         })
+      }
+      else{
+        toast.error('Please add an address to proceed with checkout')
+      }
       // Call Paystack API to initiate payment
-     await axios.post('/api/paystack', {   cartItems,
-          amount,
-          email: user.email,
-          location: 'Some Location',
-          deliveryAddress: "address",
-          
-        })
-
-      .then((res)=>{
-        setLoading(false)
-
-        console.log(res)
-        const paymentLink = res?.data?.paymentResponse?.data?.authorization_url;
-        console.log(paymentLink)
-        if(paymentLink){
-          window.location.href = paymentLink;
-
-          //  createOrder(cartItems, amount, "bright@mail.com", 'Some Location', '123 Main Street, City' );
-        }
-      })
 
     } catch (error) {
       setLoading(false)
@@ -107,6 +112,18 @@ console.log(user)
             <CartProduct item={item} key={item?._id} />
           ))}
         </div>
+
+  <form action="">
+    <div className="form-group flex flex-col">
+      <label>Delivery Address</label>
+      <input onChange={(e)=> setDeliveryAddress(e.target.value)} type="text" className="form-control outline-none border px-3 py-4" />
+    </div>
+    <div className="form-group flex flex-col">
+      <label>Email Address</label>
+      <input readOnly defaultValue={user?.email} onChange={()=> setEmailAddress(e.target.value)} type="text" className="form-control py-4 px-3 outline-none border " />
+    </div>
+  </form>
+
         {cartItems.length >= 1 && (
           <div className="cart-bottom">
             <div className="total">
