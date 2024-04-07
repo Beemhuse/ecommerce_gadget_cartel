@@ -65,7 +65,7 @@ const Navbar = () => {
           {/* Hamburger Menu Icon */}
           <div className="block xl:hidden text-white">
         <button onClick={toggleDrawer(true)}>
-          <AiOutlineMenu />
+          <AiOutlineMenu className="text-2xl text-black" />
         </button>
       </div>
       </div>
