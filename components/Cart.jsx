@@ -75,8 +75,8 @@ const Cart = () => {
             amount,
             email: user.email,
             deliveryAddress: formData.deliveryAddress,
-            note: formData.note,
-            phone: formData.phone,
+            note: formData.extraNote,
+            phone: formData.phoneNumber,
           })
 
           .then((res) => {
