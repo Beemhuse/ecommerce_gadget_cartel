@@ -137,6 +137,7 @@ const Cart = () => {
         </div>
 
         <form className="flex flex-col gap-3">
+          <h2 className="font-bold uppercase border border-b border-0 py-3 border-black">Delivery Details</h2>
           <FormField
             label="Delivery Address"
             value={formData.deliveryAddress}
