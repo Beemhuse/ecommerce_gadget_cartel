@@ -1,4 +1,4 @@
-import { createOrder } from '../../lib/client';
+import {  updateTransactionStatus } from '../../lib/client';
 import { verifyPaystackPayment } from '../../lib/verify';
 
 export default async function handler(req, res) {
@@ -11,11 +11,14 @@ export default async function handler(req, res) {
 
     const isPaymentVerified = await verifyPaystackPayment(trxref);
 
+    console.log(isPaymentVerified)
+    const newStatus = isPaymentVerified ? 'success' : 'failure';
+
     if (!isPaymentVerified) {
       return res.status(400).json({ error: 'Payment verification failed' });
     }
 
-    // If payment is verified, create the order in Sanity
+    // If payment is verified, update the transaction status in Sanity
 
     return res.status(200).json({ success: true, message:"Payment verified" });
   } catch (error) {

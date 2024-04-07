@@ -20,6 +20,7 @@ const Signup = () => {
       const response = await axios.post("/api/signup", { email, password });
       console.log(response.data);
       
+      setLoading(false)
       localStorage.setItem('token', response.data.token)
     } catch (error) {
         setLoading(false)

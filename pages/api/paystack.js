@@ -1,5 +1,5 @@
 // // pages/api/createOrder.js
-import { createOrder } from "../../lib/client";
+import { createOrder, createTransaction } from "../../lib/client";
 import { initializePaystack } from "../../lib/paystack";
 // import { verifyPaystackPayment } from './verify';
 
@@ -12,8 +12,7 @@ export default async function handler(req, res) {
     const { cartItems, amount, email, location, deliveryAddress } = req.body;
 
     const paymentResponse = await initializePaystack(email, amount);
-    const transactionRef = paymentResponse.reference;
-
+    const transactionRef = paymentResponse?.data.reference;
     const order = await createOrder(
       cartItems,
       amount,
@@ -23,11 +22,23 @@ export default async function handler(req, res) {
       transactionRef,
     );
 
-    return res.status(200).json({ success: true, order, paymentResponse });
+    if (order?._id) {
+      const transaction = await createTransaction(
+        order,
+        amount,
+        email,
+        location,
+        deliveryAddress,
+        transactionRef,
+        'pending', // Set default status to 'pending' or adjust as needed
+      );
+
+      return res.status(200).json({ success: true, order, transaction, paymentResponse });
+    } else {
+      return res.status(500).json({ error: 'Error creating order' });
+    }
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: error.message });
   }
 }
-
-

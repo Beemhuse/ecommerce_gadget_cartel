@@ -6,10 +6,12 @@ export default {
   readOnly: true, // Make the entire document read-only
   fields: [
     {
-      name: 'orderId', // Add the _id field
-      title: 'Order Number', // Change to Order Number for clarity
+      name: 'orderId', // Field for displaying _id
+      title: 'Order ID',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(), // You might want to adjust validation rules based on your requirements
+      readOnly: true, // Make it read-only as _id is system-generated
+      // hidden: true, // Hide it from the content editor UI
     },
     {
       name: 'email',
@@ -30,12 +32,7 @@ export default {
       type: 'number',
       validation: (Rule) => Rule.required().min(0),
     },
-    {
-      name: 'status',
-      title: 'Payment Status',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    },
+   
     {
       name: 'location',
       title: 'Delivery Location',
@@ -50,7 +47,7 @@ export default {
     },
     {
       name: 'transactionDate',
-      title: 'Order Date',
+      title: 'Transaction Date',
       type: 'datetime',
       validation: (Rule) => Rule.required(),
     },
@@ -59,12 +56,14 @@ export default {
     select: {
       email: 'email',
       deliveryAddress: 'deliveryAddress',
+      id: '_id', // Select _id field for display
+
     },
     prepare(selection) {
-      const { email, deliveryAddress } = selection;
+      const { email, deliveryAddress, id } = selection;
       return {
         title: email, // Display email as the title
-        subtitle: `Delivery Address: ${deliveryAddress}`, // Display delivery address as the subtitle
+        subtitle: `Order Number: ${id}\nDelivery Address: ${deliveryAddress}`, // Display order number and delivery address as the subtitle
       };
     },
   },
