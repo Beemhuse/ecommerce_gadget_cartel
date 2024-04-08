@@ -1,6 +1,6 @@
 
 // Import necessary modules
-import { client } from "../../../lib/client";
+import { client } from "../../lib/client";
 
 // Handler function for the API route
 export default async function handler(req, res) {
