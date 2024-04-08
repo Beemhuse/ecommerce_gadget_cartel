@@ -3,25 +3,21 @@ import React, { useEffect, useState } from "react";
 import { client } from "../../lib/client";
 import Link from "next/link";
 import OrderTable from "../../components/table/OrderTable";
-// import sanityClient from '../lib/sanityClient';
 import { FcNext, FcPrevious } from "react-icons/fc";
 
-const OrdersPage = ({ orders, totalPages, currentPage }) => {
+const OrdersPage = ({ transactions, totalPages, currentPage }) => {
+  console.log(transactions)
   return (
     <div className="px-[50px]">
-      <h1 className="text-center font-bold text-2xl my-8">All Orders</h1>
-      {orders.length === 0 ? (
-        
-        <p>No orders available</p>
+      <h1 className="text-center font-bold text-2xl my-8">All Transactions</h1>
+      {transactions?.length === 0 ? (
+        <p>No transactions available</p>
       ) : (
         <>
-          <OrderTable orders={orders} />
+          <OrderTable orders={transactions} />
           <div className="flex justify-center items-center mt-8 gap-4">
             {currentPage > 1 && (
-              <Link
-                href={`/orders?page=${currentPage - 1}`}
-                className={"text-xl"}
-              >
+              <Link href={`/orders?page=${currentPage - 1}`} className={"text-xl"}>
                 <button>
                   <FcPrevious />
                 </button>
@@ -30,10 +26,7 @@ const OrdersPage = ({ orders, totalPages, currentPage }) => {
             <span className={"text-xl"}>{currentPage}</span>
 
             {currentPage < totalPages && (
-              <Link
-                href={`/orders?page=${currentPage + 1}`}
-                className={"text-xl"}
-              >
+              <Link href={`/orders?page=${currentPage + 1}`} className={"text-xl"}>
                 <button>
                   <FcNext />
                 </button>
@@ -47,6 +40,7 @@ const OrdersPage = ({ orders, totalPages, currentPage }) => {
 };
 
 export default OrdersPage;
+
 export async function getServerSideProps({ query }) {
   try {
     const page = parseInt(query.page) || 1;
@@ -55,38 +49,40 @@ export async function getServerSideProps({ query }) {
     // Calculate skip value for pagination
     const skip = (page - 1) * pageSize;
 
-    // Fetch orders data from Sanity with pagination
-    const orders = await client.fetch(`
-        *[_type == "order"] | order(_createdAt desc) [${skip}...${
-      skip + pageSize - 1
-    }] {
-          _id,
-          email,
-          amount,
-          cartItems
-        }
-      `);
+    // Fetch transactions data from Sanity with pagination
+    const transactions = await client.fetch(`
+      *[_type == "transaction"] | order(_createdAt desc) [${skip}...${skip + pageSize - 1}] {
+        _id,
+        email,
+        amount,
+        deliveryAddress,
+        status,
+        transactionRef,
+        transactionDate,
+        order
+      }
+    `);
+console.log(transactions)
+    // Fetch total number of transactions for calculating total pages
+    const totalTransactions = await client.fetch(`
+      count(*[_type == "transaction"])
+    `);
 
-    // Fetch total number of orders for calculating total pages
-    const totalOrders = await client.fetch(`
-        count(*[_type == "order"])
-      `);
-
-    const totalPages = Math.ceil(totalOrders / pageSize);
+    const totalPages = Math.ceil(totalTransactions / pageSize);
 
     return {
       props: {
-        orders,
+        transactions,
         totalPages,
         currentPage: page,
       },
     };
   } catch (error) {
-    console.error("Error fetching orders from Sanity:", error);
+    console.error("Error fetching transactions from Sanity:", error);
 
     return {
       props: {
-        orders: [],
+        transactions: [],
         totalPages: 0,
         currentPage: 1,
       },

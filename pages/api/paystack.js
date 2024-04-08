@@ -1,7 +1,6 @@
 // // pages/api/createOrder.js
 import { createOrder, createTransaction } from "../../lib/client";
 import { initializePaystack } from "../../lib/paystack";
-// import { verifyPaystackPayment } from './verify';
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
