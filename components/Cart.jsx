@@ -19,7 +19,7 @@ const FormField = ({ label, value, onChange, readOnly, textarea }) => {
     <div className="form-group flex flex-col">
       <label>{label}</label>
       <InputComponent
-        value={value}
+        defaultValue={value}
         onChange={onChange}
         className="form-control outline-none border px-3 py-4"
         readOnly={readOnly}
@@ -140,13 +140,13 @@ const Cart = () => {
           <h2 className="font-bold uppercase border border-b border-0 py-3 border-black">Delivery Details</h2>
           <FormField
             label="Delivery Address"
-            value={formData.deliveryAddress}
+            // value={formData.deliveryAddress}
             onChange={(e) => handleChange("deliveryAddress", e.target.value)}
           />
           <FormField
             label="Email Address"
             value={formData.emailAddress}
-            readOnly
+            // readOnly
           />
           <FormField
             label="Phone number"
