@@ -21,7 +21,7 @@ const FormField = ({ label, value, onChange, readOnly, textarea }) => {
       <InputComponent
         defaultValue={value}
         onChange={onChange}
-        className="form-control outline-none border px-3 py-4"
+        className="form-control outline-none border px-3 py-2"
         readOnly={readOnly}
       />
     </div>
@@ -109,7 +109,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="cart-wrapper" ref={cartRef}>
+    <div className="cart-wrapper overflow-y-auto" ref={cartRef}>
       <div className="cart-container">
         <button type="button" className="cart-heading" onClick={handleShowCart}>
           <AiOutlineLeft />
@@ -134,10 +134,15 @@ const Cart = () => {
             cartItems?.map((item) => (
               <CartProduct item={item} key={item?._id} />
             ))}
+
+<div className="flex justify-between items-center">
+              <h3>Subtotal:</h3>
+              <h3>{formatCurrency(totalPrice)}</h3>
+            </div>
         </div>
 
-        <form className="flex flex-col gap-3">
-          <h2 className="font-bold uppercase border border-b border-0 py-3 border-black">Delivery Details</h2>
+        <form className="flex flex-col gap-2">
+          <h2 className="font-bold uppercase border border-b border-0 py-2 border-black">Delivery Details</h2>
           <FormField
             label="Delivery Address"
             // value={formData.deliveryAddress}
@@ -163,11 +168,8 @@ const Cart = () => {
 
         {cartItems.length >= 1 && (
           <div className="cart-bottom">
-            <div className="total">
-              <h3>Subtotal:</h3>
-              <h3>{formatCurrency(totalPrice)}</h3>
-            </div>
-            <div className="mt-6">
+           
+            <div className="">
               <button
                 type="button"
                 className={`border  rounded-xl bg-black h-14  w-full text-white text-xl relative ${
