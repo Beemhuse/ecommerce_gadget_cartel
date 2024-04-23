@@ -16,10 +16,10 @@ export default function index({ product }) {
 }
 
 export const getServerSideProps = async () => {
+
   // Fetch products for laptops
-  const productQuery = '*[_type == "product"]';
+  const productQuery = '*[_type == "product" && !(_id in path("drafts.**"))]';
   const product = await client.fetch(productQuery);
-  // console.log('Laptop Products:', product);
 
   console.log("phone Products:", product);
 

@@ -15,7 +15,6 @@ const ProductDetails = ({ product, products }) => {
   const { showCart, cartItems, totalPrice, qty } = useSelector((state) => state.cart);
   const [localQty, setLocalQty] = useState(qty); // Local state for quantity
 
-  console.log(qty)
 const dispatch = useDispatch()
 const itemInCart = cartItems.find((item) => item._id === _id);
 const itemQuantity = itemInCart ? itemInCart.quantity : qty;
@@ -94,26 +93,27 @@ const handleBuyNow = () => {
 }
 
 export const getStaticPaths = async () => {
-  const query = `*[_type == "product"] {
+  // Updated query to exclude drafts and ensure slug is defined and non-null
+  const query = `*[_type == "product" && !(_id in path("drafts.**")) && defined(slug.current) && slug.current != null] {
     slug {
       current
     }
-  }
-  `;
+  }`;
 
   const products = await client.fetch(query);
 
-  const paths = products.map((product) => ({
-    params: { 
-      slug: product?.slug?.current
-    }
+  // Map the results to paths, only including entries with valid slugs
+  const paths = products.map(product => ({
+    params: { slug: product.slug.current }
   }));
 
   return {
     paths,
-    fallback: 'blocking'
+    fallback: 'blocking' // Can be 'false' or 'blocking' depending on your needs for static generation
   }
 }
+
+
 
 export const getStaticProps = async ({ params: { slug }}) => {
   const query = `*[_type == "product" && slug.current == '${slug}'][0]`;
@@ -123,6 +123,11 @@ export const getStaticProps = async ({ params: { slug }}) => {
   const products = await client.fetch(productsQuery);
 
   console.log(product);
+  if (!product) {
+    return {
+      notFound: true, // This will render a 404 page
+    };
+  }
 
   return {
     props: { products, product }

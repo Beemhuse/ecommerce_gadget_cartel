@@ -23,33 +23,41 @@ console.log(laptopProducts)
 };
 
 export const getServerSideProps = async () => {
-  // Fetch products for laptops
-  const productQuery = '*[_type == "product"]';
+  // Set up the client - assuming 'client' is already defined elsewhere in your setup
+  // Initialize the client if not already done (pseudo-code):
+  // const client = sanityClient({projectId: 'your_project_id', dataset: 'your_dataset'});
+
+  // Fetch products for laptops, excluding drafts
+  const productQuery = '*[_type == "product" && !(_id in path("drafts.**"))]';
   const product = await client.fetch(productQuery);
-  // console.log('Laptop Products:', product);
 
-
-
-  // Fetch banner data
-  const bannerQuery = '*[_type == "banner"]';
+  // Fetch banner data, excluding drafts
+  const bannerQuery = '*[_type == "banner" && !(_id in path("drafts.**"))]';
   const bannerData = await client.fetch(bannerQuery);
 
-  // Fetch categories
-  const categoryQuery = '*[_type == "category"]';
+  // Fetch categories, excluding drafts
+  const categoryQuery = '*[_type == "category" && !(_id in path("drafts.**"))]';
   const categories = await client.fetch(categoryQuery);
-  const laptopCategoryQuery = '*[_type == "category" && name == "Laptop"]{_id}';
+
+  // Fetch the specific category ID for laptops, excluding drafts
+  const laptopCategoryQuery = '*[_type == "category" && name == "Laptop" && !(_id in path("drafts.**"))]{_id}';
   const laptopCategoryId = (await client.fetch(laptopCategoryQuery))[0]?._id;
 
-  // Fetch all products with the specified category _id
-  const laptopProductsQuery = `*[_type == "product" && category._ref == "${laptopCategoryId}"]`;
+  // Fetch all products with the specified category _id, excluding drafts
+  const laptopProductsQuery = `*[_type == "product" && category._ref == "${laptopCategoryId}" && !(_id in path("drafts.**"))]`;
   const laptopProducts = await client.fetch(laptopProductsQuery);
 
-  const phoneCategoryQuery = '*[_type == "category" && name == "Phone"]{_id}';
+  // Fetch the specific category ID for phones, excluding drafts
+  const phoneCategoryQuery = '*[_type == "category" && name == "Phone" && !(_id in path("drafts.**"))]{_id}';
   const phoneCategoryId = (await client.fetch(phoneCategoryQuery))[0]?._id;
 
-  const phoneProductsQuery = `*[_type == "product" && category._ref == "${phoneCategoryId}"]`;
+  // Fetch all products with the specified category _id, excluding drafts
+  const phoneProductsQuery = `*[_type == "product" && category._ref == "${phoneCategoryId}" && !(_id in path("drafts.**"))]`;
   const phoneProducts = await client.fetch(phoneProductsQuery);
-  console.log('phone Products:', phoneProducts);
+  
+  // Optionally log the products for debugging
+  console.log('Laptop Products:', laptopProducts);
+  console.log('Phone Products:', phoneProducts);
 
   return {
     props: { product, phoneProducts, laptopProducts, bannerData, categories },
