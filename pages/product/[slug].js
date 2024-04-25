@@ -43,17 +43,17 @@ const handleBuyNow = () => {
       <div className="product-detail-container">
         <div>
           <div className="image-container">
-            <img src={urlFor(image && image[index])} className="product-detail-image" />
+          <img src={image && image.length > index ? urlFor(image[index]) : 'default-placeholder.png'} className="product-detail-image" />
           </div>
           <div className="small-images-container">
-            {image?.map((item, i) => (
-              <img 
-                key={i}
-                src={urlFor(item)}
-                className={i === index ? 'small-image selected-image' : 'small-image'}
-                onMouseEnter={() => setIndex(i)}
-              />
-            ))}
+          {image?.map((item, i) => (
+  <img 
+    key={i}
+    src={urlFor(item) || 'default-placeholder.png'} // Fallback to a default image if urlFor fails
+    className={i === index ? 'small-image selected-image' : 'small-image'}
+    onMouseEnter={() => setIndex(i)}
+  />
+))}
           </div>
         </div>
 
