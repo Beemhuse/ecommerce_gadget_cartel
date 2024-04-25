@@ -71,7 +71,7 @@ width: 100%;
 }
 .marquee {
   position: relative;
-  height: 400px;
+  height: 450px;
   width: 100%;
   overflow-x: hidden;
 }
