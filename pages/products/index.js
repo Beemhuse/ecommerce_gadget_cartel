@@ -6,7 +6,7 @@ export default function index({ product }) {
   return (
     <section>
       <h2 className="text-center xl:text-3xl text-xl text-gray-400 ">All Products</h2>
-    <div className="grid xl:grid-cols-4 grid-cols-1 items-center ">
+    <div className="flex items-center ">
       {product?.map((product) => (
         <Product key={product?._id} product={product} />
       ))}

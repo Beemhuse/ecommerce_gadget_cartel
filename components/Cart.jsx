@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { AiOutlineLeft, AiOutlineShopping } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import {  toggleCart } from "../store/reducers/cartReducer";
+import { clearCart, toggleCart } from "../store/reducers/cartReducer";
 import axios from "axios";
 import useLoggedInStatus from "../hooks/useLoggedinStatus";
 import CircularSpinner from "./spinner/CircularSpinner";
@@ -11,9 +11,9 @@ import { useRouter } from "next/router";
 import CartProduct from "./CartProduct";
 import useCurrencyFormatter from "../hooks/useCurrencyFormatter";
 import toast from "react-hot-toast";
-import {handleGenericError} from "../hooks/mixin";
+import { handleGenericError } from "../hooks/mixin";
 const FormField = ({ label, value, onChange, readOnly, textarea }) => {
-  const InputComponent = textarea ? 'textarea' : 'input';
+  const InputComponent = textarea ? "textarea" : "input";
 
   return (
     <div className="form-group flex flex-col">
@@ -31,7 +31,7 @@ const FormField = ({ label, value, onChange, readOnly, textarea }) => {
 // const transactionNumber = generateTransactionNumber('GC');
 const Cart = () => {
   const cartRef = useRef();
-  const { cartItems, totalPrice, totalQuantities } = useSelector(
+  const { cartItems, showCart, totalPrice, totalQuantities } = useSelector(
     (state) => state?.cart
   );
   const dispatch = useDispatch();
@@ -41,6 +41,27 @@ const Cart = () => {
   const cookies = new Cookies();
   const router = useRouter();
   const user = cookies.get("GC_user");
+
+
+  const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 1;
+const indexOfLastItem = currentPage * itemsPerPage;
+const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+const currentItems = cartItems?.slice(indexOfFirstItem, indexOfLastItem);
+const totalPages = Math.ceil(cartItems?.length / itemsPerPage);
+
+const handleNextPage = () => {
+  if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+  }
+};
+
+const handlePreviousPage = () => {
+  if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+  }
+};
+
 
   const [formData, setFormData] = useState({
     deliveryAddress: "",
@@ -81,15 +102,16 @@ const Cart = () => {
 
           .then((res) => {
             setLoading(false);
-
+            dispatch(clearCart())
+            handleShowCart()
             console.log(res);
+
             const paymentLink =
               res?.data?.paymentResponse?.data?.authorization_url;
             console.log(paymentLink);
             if (paymentLink) {
               window.location.href = paymentLink;
 
-              //  createOrder(cartItems, amount, "bright@mail.com", 'Some Location', '123 Main Street, City' );
             }
           });
       } else {
@@ -103,6 +125,8 @@ const Cart = () => {
         duration: 3000,
       });
       setLoading(false);
+      handleShowCart()
+
 
       console.error("Error handling checkout:", error);
     }
@@ -131,18 +155,37 @@ const Cart = () => {
 
         <div className="product-container">
           {cartItems?.length >= 1 &&
-            cartItems?.map((item) => (
+            currentItems?.map((item) => (
               <CartProduct item={item} key={item?._id} />
             ))}
 
-<div className="flex justify-between items-center">
-              <h3>Subtotal:</h3>
-              <h3>{formatCurrency(totalPrice)}</h3>
-            </div>
+          <div className="flex justify-between items-center">
+            <h3>Subtotal:</h3>
+            <h3>{formatCurrency(totalPrice)}</h3>
+          </div>
         </div>
-
+        {totalPages > 0 && (
+                            <div className="pagination-buttons flex justify-center space-x-4 my-4">
+                                <button
+                                    onClick={handlePreviousPage}
+                                    className="text-white bg-gray-800 hover:bg-gray-600 px-4 py-2 rounded"
+                                    disabled={currentPage === 1}
+                                >
+                                    Previous
+                                </button>
+                                <button
+                                    onClick={handleNextPage}
+                                    className="text-white bg-gray-800 hover:bg-gray-600 px-4 py-2 rounded"
+                                    disabled={currentPage === totalPages}
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        )}
         <form className="flex flex-col gap-2">
-          <h2 className="font-bold uppercase border border-b border-0 py-2 border-black">Delivery Details</h2>
+          <h2 className="font-bold uppercase border border-b border-0 py-2 border-black">
+            Delivery Details
+          </h2>
           <FormField
             label="Delivery Address"
             // value={formData.deliveryAddress}
@@ -167,8 +210,7 @@ const Cart = () => {
         </form>
 
         {cartItems.length >= 1 && (
-          <div className="cart-bottom">
-           
+          <div className="cart-bottom mt-8">
             <div className="">
               <button
                 type="button"

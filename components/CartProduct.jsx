@@ -19,10 +19,10 @@ export default function CartProduct({item}) {
     <div>
          <div className="product" key={item._id}>
               <img src={urlFor(item?.image[0])} className="w-[150px] h-auto rounded-lg" />
-              <div className="w-full  flex flex-col gap-4">
-                <div className="flex w-full items-center justify-between">
-                  <h5>{item?.name}</h5>
-                  <h4>{formatCurrency(item?.price)}</h4>
+              <div className="w-full  flex flex-col gap-2">
+                <div className="flex flex-col w-full gap-2 items-start justify-between">
+                  <p className='text-md'>{item?.name}</p>
+                  <p className='text-md'>{formatCurrency(item?.price)}</p>
                 </div>
                 <div className="flex justify-between items-center   ">
                 <div className="quantity-desc grid grid-cols-3  items-center w-2/3 ">
