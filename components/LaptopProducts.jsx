@@ -46,11 +46,10 @@ export default function LaptopProducts({products}) {
           </>
         ) : (
           <>
-<Slider {...settings}>
+<Slider {...settings} className='grid grid-cols-4 gap-4'>
             {products?.map((product, idx) => (
-              <div key={idx} className="flex">
-                <Product product={product} />
-              </div>
+              
+                <Product key={idx} product={product} />
             ))}
 </Slider>
           </>
