@@ -4,8 +4,13 @@ import { client } from "../../lib/client";
 import Link from "next/link";
 import OrderTable from "../../components/table/OrderTable";
 import { FcNext, FcPrevious } from "react-icons/fc";
+import { Cookies } from "react-cookie";
 
 const OrdersPage = ({ transactions, totalPages, currentPage }) => {
+
+  const cookies = new Cookies();
+  const user = cookies.get("GC_user");
+
   console.log(transactions)
   return (
     <div className="px-[50px]">
@@ -41,17 +46,26 @@ const OrdersPage = ({ transactions, totalPages, currentPage }) => {
 
 export default OrdersPage;
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ req, query }) {
   try {
     const page = parseInt(query.page) || 1;
     const pageSize = 10; // Set your desired page size
 
+    // Get the currently authenticated user's ID or email from the request
+    const cookies = new Cookies(req.headers.cookie);
+    const user = cookies.get("GC_user");
+const userId = user.id
+    if (!userId) {
+      throw new Error("User not authenticated");
+    }
+    console.log(userId)
+    
     // Calculate skip value for pagination
     const skip = (page - 1) * pageSize;
 
-    // Fetch transactions data from Sanity with pagination
+    // Fetch transactions data for the authenticated user with pagination
     const transactions = await client.fetch(`
-      *[_type == "transaction"] | order(_createdAt desc) [${skip}...${skip + pageSize - 1}] {
+      *[_type == "transaction" && id == "${userId}"] | order(_createdAt desc) [${skip}...${skip + pageSize - 1}] {
         _id,
         email,
         amount,
@@ -59,13 +73,15 @@ export async function getServerSideProps({ query }) {
         status,
         transactionRef,
         transactionDate,
-        order
+        order,
+        id
+
       }
     `);
-console.log(transactions)
-    // Fetch total number of transactions for calculating total pages
+
+    // Fetch total number of transactions for the authenticated user for calculating total pages
     const totalTransactions = await client.fetch(`
-      count(*[_type == "transaction"])
+      count(*[_type == "transaction" && email == "${userId}"])
     `);
 
     const totalPages = Math.ceil(totalTransactions / pageSize);

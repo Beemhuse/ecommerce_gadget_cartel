@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { cartItems, amount, email, note, phone, deliveryAddress } = req.body;
+    const { cartItems, amount, email, note, phone, deliveryAddress, id } = req.body;
 console.log("Request Body:", req.body);
     const paymentResponse = await initializePaystack(email, amount);
     const transactionRef = paymentResponse?.data.reference;
@@ -29,6 +29,7 @@ console.log("Request Body:", req.body);
         email,
         deliveryAddress,
         transactionRef,
+        id,
         'pending', // Set default status to 'pending' or adjust as needed
       );
 

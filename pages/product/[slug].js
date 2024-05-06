@@ -84,7 +84,7 @@ const handleBuyNow = () => {
           <h2>You may also like</h2>
           <div className="marquee">
             <div className="flex items-center gap-4 track">
-              {products?.map((item) => (
+              {products?.slice(0,6)?.map((item) => (
                 <Product key={item?._id} product={item} />
               ))}
             </div>

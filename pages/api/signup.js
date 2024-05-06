@@ -28,7 +28,7 @@ export default async function handler(req, res) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = {
-    _id: uuidv4(),
+    id: uuidv4(),
     email,
     password: hashedPassword,
   };

@@ -31,12 +31,9 @@ export default function OrderTable({ orders }) {
     console.log(id)
     try {
       const orderDetails = await axios.get(`/api/order/${id}`);
-      console.log(orderDetails)
       setSelectedOrderDetails(orderDetails);
       // setIsModalOpen(true);
     } catch (error) {
-      console.error("Error fetching order details:", error);
-      // Handle error, e.g., show an error message to the user
     }
   };
 
@@ -46,7 +43,7 @@ export default function OrderTable({ orders }) {
       <Table aria-label="basic table" size="lg" stripe="odd" className="w-full overflow-scroll">
         <thead>
           <tr>
-            <th>Order ID</th>
+            <th>S/N</th>
             <th>Email</th>
             <th>Amount</th>
             <th>Status</th>
@@ -55,9 +52,9 @@ export default function OrderTable({ orders }) {
           </tr>
         </thead>
         <tbody>
-          {orders?.map((order) => (
+          {orders?.map((order, index) => (
             <tr key={order?._id} onClick={() => handleRowClick(order?._id)}>
-              <td>{order?._id}</td>
+              <td>{index +1}</td>
               <td>{order?.email}</td>
               <td>{formatCurrency(order?.amount)}</td>
               <td className="w-inherit" > <span style={getStatusColor(order?.status)} className="p-3 rounded-lg">{order?.status} </span> </td>

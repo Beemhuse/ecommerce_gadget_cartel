@@ -42,7 +42,6 @@ const Cart = () => {
   const router = useRouter();
   const user = cookies.get("GC_user");
 
-
   const [currentPage, setCurrentPage] = useState(1);
 const itemsPerPage = 1;
 const indexOfLastItem = currentPage * itemsPerPage;
@@ -68,6 +67,7 @@ const handlePreviousPage = () => {
     emailAddress: user?.email || "",
     phoneNumber: "",
     extraNote: "",
+    id: user?.id,
   });
 
   const handleChange = (key, value) => {
@@ -98,6 +98,7 @@ const handlePreviousPage = () => {
             deliveryAddress: formData.deliveryAddress,
             note: formData.extraNote,
             phone: formData.phoneNumber,
+            id: user.id
           })
 
           .then((res) => {

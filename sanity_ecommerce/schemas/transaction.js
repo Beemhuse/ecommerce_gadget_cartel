@@ -21,6 +21,12 @@ export default {
       title: 'Email',
       type: 'string',
     },
+    {
+      name: 'id',
+      title: 'User Id',
+      type: 'string',
+      // hidden: true
+    },
  
     {
       name: 'deliveryAddress',

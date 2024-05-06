@@ -22,6 +22,7 @@ const Signup = () => {
       
       setLoading(false)
       localStorage.setItem('token', response.data.token)
+      router.push("/signin");
     } catch (error) {
         setLoading(false)
 
