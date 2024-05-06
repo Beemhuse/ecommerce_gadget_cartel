@@ -8,8 +8,6 @@ import { Cookies } from "react-cookie";
 
 const OrdersPage = ({ transactions, totalPages, currentPage }) => {
 
-  const cookies = new Cookies();
-  const user = cookies.get("GC_user");
 
   console.log(transactions)
   return (

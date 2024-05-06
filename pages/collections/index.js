@@ -3,25 +3,37 @@ import { client, urlFor } from "../../lib/client";
 import CategoryList from "../../components/collection/CategoryList";
 import Link from "next/link";
 import EmptyProduct from "../../components/empty/EmptyProduct";
+import useCurrencyFormatter from "../../hooks/useCurrencyFormatter";
 
 const Index = ({ categories }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
-console.log(categories)
-const [activeCategory, setActiveCategory] = useState(null);
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(5); // Set your desired products per page
+  const formatCurrency = useCurrencyFormatter("NGN");
 
-useEffect(() => {
-  if (categories && categories?.length > 0) {
-    setSelectedCategory(categories[0]);
-    setActiveCategory(categories[0]?._id);
-  }
-}, [categories]);
+  useEffect(() => {
+    if (categories && categories?.length > 0) {
+      setSelectedCategory(categories[0]);
+      setActiveCategory(categories[0]?._id);
+    }
+  }, [categories]);
+
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-    setSelectedCategory(category);
     setActiveCategory(category?._id);
+    setCurrentPage(1); // Reset current page when category changes
   };
 
-  console.log(categories);
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = selectedCategory?.products?.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="p-4">
       <CategoryList
@@ -31,36 +43,50 @@ useEffect(() => {
       />
 
       {selectedCategory && (
-        <div className="mt-5 flex flex-wrap gap-5">
-          {
-            selectedCategory?.products.length === 0 ? 
-            <EmptyProduct message={`No products in ${selectedCategory?.name} collection`} />:
-
+        <div className="mt-5 flex justify-start w-[80%] m-auto items-start flex-wrap gap-5">
+          {selectedCategory?.products.length === 0 ? (
+            <EmptyProduct message={`No products in ${selectedCategory?.name} collection`} />
+          ) : (
             <>
-             {selectedCategory?.products?.map((product) => (
-            <Link href={`/product/${product?.slug?.current}`} key={product?._id} className="border p-2 rounded-lg flex cursor-pointer flex-col">
-              <img
-                src={urlFor(product?.image && product?.image[0])}
-                width={250}
-                height={250}
-                className="product-image"
-              />
-            
-              <div className="flex gap-2 mt-auto ">
-              <h2 className="font-semibold">{"Name"}:</h2>
-              <h2 className="">{product?.name}</h2>
+            {
+              currentProducts.length === 0 ?
+              <EmptyProduct message={`No products in ${selectedCategory?.name} collection`} />: 
 
-              </div>
-            
-              <p className="font-semibold">Price: </p>
-              <span>{product?.price}</span>
-            </Link>
-          ))}
+<>
+              {currentProducts?.map((product) => (
+                <Link href={`/product/${product?.slug?.current}`} key={product?._id} className="border p-2 rounded-lg flex cursor-pointer flex-col">
+                  <img
+                    src={urlFor(product?.image && product?.image[0])}
+                    width={250}
+                    height={250}
+                    className="product-image"
+                  />
+                  <div className=" ">
+                  <h2 className="font-bold xl:my-3 text-md">{product?.name}</h2>
+                    <span className="text-[#F02D34] font-bold text-xs">{formatCurrency(product?.price)}</span>
+                  </div>
+                </Link>
+              ))}
+              </>
+            }
+
+              
             </>
-          }
-         
+          )}
         </div>
       )}
+              <div className="flex justify-center items-center mt-8 gap-4">
+                {currentPage > 1 && (
+                  <button onClick={() => paginate(currentPage - 1)} className="text-xl bg-black text-white px-4 py-1 rounded-md">
+                    Previous
+                  </button>
+                )}
+                {currentProducts?.length > 0 && (
+                  <button  onClick={() => paginate(currentPage + 1)} className="text-xl bg-black text-white px-4 py-1 rounded-md">
+                    Next
+                  </button>
+                )}
+              </div>
     </div>
   );
 };
@@ -92,3 +118,4 @@ export const getServerSideProps = async () => {
 };
 
 export default Index;
+
