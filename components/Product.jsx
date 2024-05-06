@@ -12,7 +12,7 @@ const formatCurrency = useCurrencyFormatter("NGN")
     <div className="relative">
     <Link href={`/product/${slug?.current}`}>
       <div
-        className=" xl:max-w-[700px] lg:w-3/4 h-auto w-[50%] relative  transform flex flex-col transition-transform duration-300 hover:scale-10"
+        className=" xl:max-w-[700px] lg:w-3/4  w-[50%] relative  transform flex flex-col transition-transform duration-300 hover:scale-10"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -22,9 +22,9 @@ const formatCurrency = useCurrencyFormatter("NGN")
           alt={name}
         />
         <div className="flex flex-col">
-        <div className="flex items-start xl:p-3  flex-col justify-between">
+        <div className="flex items-start  flex-col justify-between">
 
-        <p className="font-bold xl:my-7 text-md ">{name}</p>
+        <p className="font-bold xl:my-3 text-md ">{name}</p>
         <p className='text-[#F02D34] font-bold text-xs'>{formatCurrency(price)}</p>
 
         </div>

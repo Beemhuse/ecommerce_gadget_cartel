@@ -17,7 +17,7 @@ const ProductDetails = ({ product, products }) => {
 
 const dispatch = useDispatch()
 const itemInCart = cartItems.find((item) => item._id === _id);
-const itemQuantity = itemInCart ? itemInCart.quantity : qty;
+const itemQuantity = itemInCart ? itemInCart?.quantity : qty;
 
 const formatCurrency = useCurrencyFormatter("NGN")
 
@@ -38,22 +38,24 @@ const handleBuyNow = () => {
 
 
   }
+
+  console.log("Image ===>" , image)
   return (
     <div>
       <div className="product-detail-container">
         <div>
           <div className="image-container">
-          <img src={image && image.length > index ? urlFor(image[index]) : 'default-placeholder.png'} className="product-detail-image" />
+          {/* <img src={image && image?.length > index ? urlFor(image[index]) : 'default-placeholder.png'} className="product-detail-image" /> */}
           </div>
           <div className="small-images-container">
-          {image?.map((item, i) => (
-  <img 
-    key={i}
-    src={urlFor(item) || 'default-placeholder.png'} // Fallback to a default image if urlFor fails
-    className={i === index ? 'small-image selected-image' : 'small-image'}
-    onMouseEnter={() => setIndex(i)}
-  />
-))}
+          {/* {image && image?.map((item, i) => (
+            <img 
+  key={i}
+  src={urlFor(item) || 'default-placeholder.png'} 
+  className={i === index ? 'small-image selected-image' : 'small-image'}
+  onMouseEnter={() => setIndex(i)}
+/>
+))} */}
           </div>
         </div>
 
@@ -81,7 +83,7 @@ const handleBuyNow = () => {
       <div className="maylike-products-wrapper">
           <h2>You may also like</h2>
           <div className="marquee">
-            <div className="grid grid-cols-4 items-center gap-4 track">
+            <div className="flex items-center gap-4 track">
               {products?.map((item) => (
                 <Product key={item?._id} product={item} />
               ))}
