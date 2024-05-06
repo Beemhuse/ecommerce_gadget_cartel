@@ -45,17 +45,17 @@ const handleBuyNow = () => {
       <div className="product-detail-container">
         <div>
           <div className="image-container">
-          {/* <img src={image && image?.length > index ? urlFor(image[index]) : 'default-placeholder.png'} className="product-detail-image" /> */}
+          <img src={image && image?.length > index ? urlFor(image[index]) : 'default-placeholder.png'} className="product-detail-image" />
           </div>
           <div className="small-images-container">
-          {/* {image && image?.map((item, i) => (
+          {image && image?.map((item, i) => (
             <img 
   key={i}
   src={urlFor(item) || 'default-placeholder.png'} 
   className={i === index ? 'small-image selected-image' : 'small-image'}
   onMouseEnter={() => setIndex(i)}
 />
-))} */}
+))}
           </div>
         </div>
 
@@ -63,7 +63,7 @@ const handleBuyNow = () => {
           <h1 className='font-semibold text-xl'>{name}</h1>
         
           <h4>Specifications: </h4>
-          <p  className='max-h-[200px] overflow-y-scroll no-scrollbar'>{details}</p>
+          <p  className='h-[150px] w-[300px] shadow-lg p-2  overflow-y-scroll no-scrollbar'>{details}</p>
           <p className="price">{formatCurrency(price)}</p>
           <div className="quantity">
             <h3>Quantity:</h3>
