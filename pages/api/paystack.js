@@ -9,7 +9,6 @@ export default async function handler(req, res) {
 
   try {
     const { cartItems, amount, email, note, phone, deliveryAddress, id } = req.body;
-console.log("Request Body:", req.body);
     const paymentResponse = await initializePaystack(email, amount);
     const transactionRef = paymentResponse?.data.reference;
     const order = await createOrder(

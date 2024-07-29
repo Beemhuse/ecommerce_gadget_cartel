@@ -18,7 +18,8 @@ export default function Index({ products, totalPages }) {
 
   return (
     <section>
-      <h2 className="text-center xl:text-3xl text-xl text-gray-400">All Products</h2>
+      <h2 className="text-center xl:text-3xl text-xl ">All Products</h2>
+      <hr className="my-5 w-full" />
       <div className="grid xl:grid-cols-4 grid-cols-2 justify-center w-[80%] m-auto gap-y-8">
         {products.map((product) => (
           <Product key={product._id} product={product} />
@@ -34,7 +35,7 @@ export default function Index({ products, totalPages }) {
           const pageNumber = startPage + index;
           return (
             <Link href={`/products/?page=${pageNumber}`} key={pageNumber}>
-              <p className={`px-4 py-2 mx-1 ${pageNumber === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200'} rounded-md`}>
+              <p className={`px-4 py-2 mx-1 ${pageNumber === currentPage ? 'bg-[#F02D34] text-white' : 'bg-gray-200'} rounded-md`}>
                 {pageNumber}
               </p>
             </Link>

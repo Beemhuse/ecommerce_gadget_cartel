@@ -7,7 +7,7 @@ const CategoryList = ({ categories, handleCategoryClick, activeCategory }) => {
       handleCategoryClick(category);
     };
   return (
-    <div className='flex gap-5'>
+    <div className='flex gap-5 justify-center '>
     {categories?.map((category) => (
       <div key={category?._id}>
         <h2

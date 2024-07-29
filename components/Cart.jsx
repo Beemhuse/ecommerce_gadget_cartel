@@ -82,6 +82,7 @@ const handlePreviousPage = () => {
       if (!isLoggedIn) {
         // Redirect to the login page if the user is not logged in
         router.push("/signin");
+        dispatch(toggleCart());
         return;
       }
       // Call createOrder function before processing payment

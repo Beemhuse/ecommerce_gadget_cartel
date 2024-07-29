@@ -4,6 +4,7 @@ import CategoryList from "../../components/collection/CategoryList";
 import Link from "next/link";
 import EmptyProduct from "../../components/empty/EmptyProduct";
 import useCurrencyFormatter from "../../hooks/useCurrencyFormatter";
+import Image from "next/image";
 
 const Index = ({ categories }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -29,11 +30,11 @@ const Index = ({ categories }) => {
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = selectedCategory?.products?.slice(
     indexOfFirstProduct,
-    indexOfLastProduct
+    15
   );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+console.log("current products ==>>> ",currentProducts);
   return (
     <div className="p-4">
       <CategoryList
@@ -62,8 +63,9 @@ const Index = ({ categories }) => {
                       key={product?._id}
                       className="border p-2 rounded-lg flex cursor-pointer flex-col"
                     >
-                      <img
-                        src={urlFor(product?.image && product?.image[0])}
+
+                      <Image
+                        src={urlFor(product?.image[0]).toString()}
                         width={250}
                         height={250}
                         className="product-image"

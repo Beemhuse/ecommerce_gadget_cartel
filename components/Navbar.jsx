@@ -19,7 +19,6 @@ const navigationLinks = [
 ];
 
 const Navbar = () => {
-  // const { showCart, setShowCart, totalQuantities } = useStateContext();
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
@@ -38,9 +37,9 @@ const Navbar = () => {
     setOpen(inOpen);
   };
   return (
-    <div className="flex justify-between text-black items-center mb-8 py-5 p-2 top-0 w-full z-index-100000  px-4  ">
+    <div className="flex justify-between text-black shadow-md   items-center mb-8 py-5 p-2 top-0 w-full bg-white px-8 ">
       <p className=" xl:w-2/3 text-white">
-        <Link href="/"> <img src="/gadget_logo.jpg" width={50} height={50} alt="logo" /> </Link> 
+        <Link href="/"> <img src="/gadget_logo.jpg" width={80} height={80} alt="logo" /> </Link> 
       </p>
       <ul className="xl:flex hidden  items-center gap-6 w-full  justify-center">
         {navigationLinks.map((link) => (
