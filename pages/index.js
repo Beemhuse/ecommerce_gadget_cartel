@@ -40,9 +40,9 @@ export const getServerSideProps = async () => {
   const categories = await client.fetch(categoryQuery);
 
   // Fetch the specific category ID for laptops, excluding drafts
-  const laptopCategoryQuery = '*[_type == "category" && name == "Laptop" && !(_id in path("drafts.**"))]{_id}';
+  const laptopCategoryQuery = '*[_type == "category" && name == "Laptops" && !(_id in path("drafts.**"))]{_id}';
   const laptopCategoryId = (await client.fetch(laptopCategoryQuery))[0]?._id;
-
+console.log(laptopCategoryQuery)
   // Fetch all products with the specified category _id, excluding drafts
   const laptopProductsQuery = `*[_type == "product" && category._ref == "${laptopCategoryId}" && !(_id in path("drafts.**"))]`;
   const laptopProducts = await client.fetch(laptopProductsQuery);
@@ -57,7 +57,7 @@ export const getServerSideProps = async () => {
   
   // Optionally log the products for debugging
   console.log('Laptop Products:', laptopProducts);
-  console.log('Phone Products:', phoneProducts);
+  // console.log('Phone Products:', phoneProducts);
 
   return {
     props: { product, phoneProducts, laptopProducts, bannerData, categories },

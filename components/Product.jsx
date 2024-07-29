@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { urlFor } from '../lib/client';
 import useCurrencyFormatter from '../hooks/useCurrencyFormatter';
+import Image from 'next/image';
 
 const Product = ({ product: { image, name, slug, description, price } }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -20,6 +21,7 @@ const formatCurrency = useCurrencyFormatter("NGN")
           src={urlFor(image && image[0])}
           className=' object-cover'
           alt={name}
+          loading="lazy"  // Add lazy loading
         />
         <div className="flex flex-col">
         <div className="flex items-start  flex-col justify-between">

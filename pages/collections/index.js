@@ -45,48 +45,65 @@ const Index = ({ categories }) => {
       {selectedCategory && (
         <div className="mt-5 flex justify-start w-[80%] m-auto items-start flex-wrap gap-5">
           {selectedCategory?.products.length === 0 ? (
-            <EmptyProduct message={`No products in ${selectedCategory?.name} collection`} />
+            <EmptyProduct
+              message={`No products in ${selectedCategory?.name} collection`}
+            />
           ) : (
             <>
-            {
-              currentProducts.length === 0 ?
-              <EmptyProduct message={`No products in ${selectedCategory?.name} collection`} />: 
-
-<>
-              {currentProducts?.map((product) => (
-                <Link href={`/product/${product?.slug?.current}`} key={product?._id} className="border p-2 rounded-lg flex cursor-pointer flex-col">
-                  <img
-                    src={urlFor(product?.image && product?.image[0])}
-                    width={250}
-                    height={250}
-                    className="product-image"
-                  />
-                  <div className=" ">
-                  <h2 className="font-bold xl:my-3 text-md">{product?.name}</h2>
-                    <span className="text-[#F02D34] font-bold text-xs">{formatCurrency(product?.price)}</span>
-                  </div>
-                </Link>
-              ))}
-              </>
-            }
-
-              
+              {currentProducts.length === 0 ? (
+                <EmptyProduct
+                  message={`No products in ${selectedCategory?.name} collection`}
+                />
+              ) : (
+                <>
+                  {currentProducts?.map((product) => (
+                    <Link
+                      href={`/product/${product?.slug?.current}`}
+                      key={product?._id}
+                      className="border p-2 rounded-lg flex cursor-pointer flex-col"
+                    >
+                      <img
+                        src={urlFor(product?.image && product?.image[0])}
+                        width={250}
+                        height={250}
+                        className="product-image"
+                      />
+                      <div className=" ">
+                        <h2 className="font-bold xl:my-3 text-md">
+                          {product?.name}
+                        </h2>
+                        
+                        <span className="text-[#F02D34] font-bold text-xs">
+                          {formatCurrency(product?.price)}
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </>
+              )}
             </>
           )}
         </div>
       )}
-              <div className="flex justify-center items-center mt-8 gap-4">
-                {currentPage > 1 && (
-                  <button onClick={() => paginate(currentPage - 1)} className="text-xl bg-black text-white px-4 py-1 rounded-md">
-                    Previous
-                  </button>
-                )}
-                {currentProducts?.length > 0 && (
-                  <button  onClick={() => paginate(currentPage + 1)} className="text-xl bg-black text-white px-4 py-1 rounded-md">
-                    Next
-                  </button>
-                )}
-              </div>
+      
+      <div className="flex justify-center items-center mt-8 gap-4">
+        {currentPage > 1 && (
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            className="text-xl bg-black text-white px-4 py-1 rounded-md"
+          >
+            Previous
+          </button>
+        )}
+        {currentProducts?.length > 0 && (
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            className="text-xl bg-black text-white px-4 py-1 rounded-md"
+          >
+            Next
+          </button>
+        )}
+      </div>
     </div>
   );
 };
@@ -118,4 +135,3 @@ export const getServerSideProps = async () => {
 };
 
 export default Index;
-

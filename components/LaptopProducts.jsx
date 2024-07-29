@@ -45,7 +45,7 @@ export default function LaptopProducts({ products }) {
         ) : (
           <>
             <Slider {...settings} className="grid grid-cols-4 gap-4">
-              {products?.map((product, idx) => (
+              {products?.slice(0,8).map((product, idx) => (
                 <Product key={idx} product={product} />
               ))}
             </Slider>

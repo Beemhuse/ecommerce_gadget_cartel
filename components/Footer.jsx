@@ -9,7 +9,7 @@ import { FaCcVisa, FaCcMastercard } from "react-icons/fa6";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
+// 
   return (
     <footer className=" mt-auto text-black mb-8">
       <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full p-4 gap-4  xl:w-4/5 mx-auto">
