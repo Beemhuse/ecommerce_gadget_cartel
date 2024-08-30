@@ -55,7 +55,7 @@ const router = useRouter()
     setError(null)
     }, 8000 )
   return (
-    <div className='mx-auto w-2/6 flex shadow-xl flex-col gap-4 h-[40vh]  m-auto rounded-xl p-4 '>
+    <div className='mx-auto xl:w-2/6 w-full flex shadow-xl flex-col gap-4 h-[40vh]  m-auto rounded-xl p-4 '>
     {error && <p className='text-red-500 text-end'>{error}</p>}
     {success && <p className='text-green-500 text-end'>{success}</p>}
     <h1 className='text-3xl font-bold text-center'>Welcome back!</h1>

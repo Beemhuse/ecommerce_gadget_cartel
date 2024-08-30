@@ -16,7 +16,7 @@ export default function MobileProducts({ products }) {
             <EmptyProduct message={"Products not found"} />
           </>
         ) : (
-          <div className="grid grid-cols-4 gap-4 ">
+          <div className="grid xl:grid-cols-4 grid-cols-2 gap-4 ">
             {products?.slice(0,8).map((product, idx) => (
                 <Product key={idx} product={product} />
             ))}

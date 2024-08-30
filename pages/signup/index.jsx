@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { scrollToTop } from "../../hooks/useScrollToTop";
 import { handleGenericError } from "../../hooks/mixin";
 import CircularSpinner from "../../components/spinner/CircularSpinner";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const router = useRouter();
@@ -15,6 +16,9 @@ const Signup = () => {
 
 
   const handleSignup = async () => {
+    if(email === "" && password === ""){
+      toast.error("Please enter your email")
+    }
     try {
         setLoading(true)
       const response = await axios.post("/api/signup", { email, password });
@@ -35,7 +39,7 @@ setTimeout(()=>{
 setError(null)
 }, 8000 )
   return (
-    <div className="mx-auto w-2/6 flex shadow-xl flex-col gap-4 h-[40vh]  m-auto rounded-xl p-4 ">
+    <div className="mx-auto xl:w-2/6 w-full flex shadow-xl flex-col gap-4 h-[40vh]  m-auto rounded-xl p-4 ">
       <h1 className="text-3xl font-bold text-center">Get Started</h1>
       {error && <p className="text-red-500 text-center">{error}</p>}
       <div className="flex flex-col gap-4">

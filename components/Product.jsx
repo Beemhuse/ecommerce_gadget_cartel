@@ -13,7 +13,7 @@ const formatCurrency = useCurrencyFormatter("NGN")
     <div className="relative">
     <Link href={`/product/${slug?.current}`}>
       <div
-        className=" xl:max-w-[700px] lg:w-3/4  w-[50%] relative  transform flex flex-col transition-transform duration-300 hover:scale-10"
+        className=" xl:max-w-[700px] lg:w-3/4  w-[100%] relative  transform flex flex-col transition-transform duration-300 hover:scale-10"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >

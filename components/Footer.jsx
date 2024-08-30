@@ -45,7 +45,7 @@ const Footer = () => {
             <p className="text-gray-400">
               If you need support? Just give us a call.{" "}
             </p>
-            <p>+2349166671569</p>
+            <p>+2347040165186</p>
           </div>
         </div>
       </div>
