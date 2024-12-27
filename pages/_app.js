@@ -1,6 +1,6 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
-
+import { GoogleTagManager } from "@next/third-parties/google";
 import { Layout } from "../components";
 import "../styles/globals.css";
 // import { StateContext } from '../context/StateContext';
@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }) {
       <PersistGate loading={null} persistor={persistor}>
         <GeneralLayout>
           <Toaster />
+          <GoogleTagManager gtmId="G-PW2FL58540"/>
           <Component {...pageProps} />
         </GeneralLayout>
       </PersistGate>
